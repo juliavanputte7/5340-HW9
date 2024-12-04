@@ -1,0 +1,52 @@
+#day 1 & 2: Buy Fabric Bundle for sure (maybe 2) adn also some fleece, mesh,
+#and casing one of the days
+
+#Total Revenue = $2500
+data;
+set MATERIAL:= Money P1 Fleece Mesh Casing FabricBundle;
+set CUSTOMER:= C1;
+set LOW_PRIORITY:=;
+set NO_LATE:=;
+set DELIVER_PICKUP := D; 
+set CAPACITY_RESOURCES:=  D;
+set TIME := M T;
+param init_cash := ;
+param: BOM: usage :=  #list for BOM  USUAL INPUT FORMAT FROM MRP SYSTEM
+P1, Fleece 180
+P1, Mesh  180
+P1, Casing 1080
+P1, D 60
+;
+
+param:	cost	 :=								#resource cost defaulted to 0 if not specified
+Fleece	400
+Mesh	600
+Casing	100
+FabricBundle 800	
+	;				
+param:	ord_qty	 :=								#resource order quantity defaulted to 0 if not specified
+Fleece	1440
+Mesh	3600
+Casing	1800
+FabricBundle 1	
+	;			
+param min_buy:=
+	;
+param max_buy:=
+;
+
+param	baseprice (tr) : C1  :=
+P1		100
+	;
+param p_disc := .01;
+#customer, product demand defaulted to 0 if not given here	
+param	demand:= 
+C1, P1, M  15
+C1, P1, T  10
+;		
+param	supply:		M T:=
+D           3000 3000
+Money		5000 5000
+;
+		
+param: SUB_TRIPLES: sub_usage penalty mix :=  ;

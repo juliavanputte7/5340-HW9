@@ -1,0 +1,53 @@
+#day 1: Buy 100 rods and 10 boxes for each size 
+#cost = $1000 + $200 = $1200
+#Total Revenue = $3000
+#Total Profit = $1800
+data;
+set MATERIAL:= Money PSmall PLarge LargeBox SmallBox 36MetalRod 10MetalRod;
+set CUSTOMER:= Online;
+set LOW_PRIORITY:=;
+set NO_LATE:=;
+set DELIVER_PICKUP := D; 
+set CAPACITY_RESOURCES:=  D;
+set TIME := M;
+param init_cash := ;
+param: BOM: usage :=  #list for BOM  USUAL INPUT FORMAT FROM MRP SYSTEM
+PSmall, 10MetalRod 10
+PLarge, 36MetalRod 10
+PSmall, D 60
+PLarge, D 120
+;
+
+param:	cost	 :=								#resource cost defaulted to 0 if not specified
+10MetalRod 5
+36MetalRod 5
+SmallBox 10
+LargeBox 10
+	;				
+param:	ord_qty	 :=								#resource order quantity defaulted to 0 if not specified
+10MetalRod 1
+36MetalRod 1
+SmallBox 1
+LargeBox 1
+	;			
+param min_buy:=
+	;
+param max_buy:=
+;
+
+param	baseprice (tr) : Online  :=
+PSmall		100
+PLarge 		200
+	;
+param p_disc := .01;
+#customer, product demand defaulted to 0 if not given here	
+param	demand:= 
+Online, PSmall, M  10
+Online, PLarge, M  10
+;		
+param	supply:		M:=
+D           3000
+Money		5000
+;
+		
+param: SUB_TRIPLES: sub_usage penalty mix :=  ;

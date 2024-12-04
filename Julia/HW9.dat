@@ -1,0 +1,375 @@
+# data for Operations model: dogbed Multi-level, Multi-period with subs
+data;
+
+set MATERIAL := 
+18PlasticRod
+24PlasticRod
+30PlasticRod
+30MetalRod
+36PlasticRod
+36MetalRod
+PlasticLegs
+MetalLegs
+Fleece
+FleeceJ
+Mesh
+MeshJ
+Loops
+LoopsJ
+Casing
+CasingJ
+LargeMetalFleece
+LargePlasticFleece
+LargePlasticMesh
+LargeMetalMesh
+MediumFleece
+MediumMesh
+SmallFleece
+SmallMesh
+LargeFleeceTop
+LargeFleeceTopJ
+MediumFleeceTop
+MediumFleeceTopJ
+SmallFleeceTop
+SmallFleeceTopJ
+SmallPillow
+SmallPillowJ
+MeshBag
+MeshBagJ
+FleeceScrap
+FleeceScrapJ
+MeshScrap
+MeshScrapJ
+Money
+SmallMeshTop
+SmallMeshTopJ
+MediumMeshTop
+MediumMeshTopJ
+LargeMeshTop
+LargeMeshTopJ
+SmallPlasticFrame
+MediumPlasticFrame
+LargePlasticFrame
+LargeMetalFrame
+SmallQuiltTop
+SmallQuilt
+SpoiledDogBundle
+LargeBundle
+MediumBundle
+SmallBundle
+FabricBundle
+LargeBox
+SmallBox;
+
+set CUSTOMER := Store Show Online;
+set LOW_PRIORITY :=;
+set HIGH_PRIORITY := Store Show Online;
+set NO_LATE := Show;
+
+set CAPACITY_RESOURCES := Doug Janey TransferD2J TransferJ2D;
+set DELIVER_PICKUP := Doug; #set of capacity resources that can be used to deliver and pickup!
+set TIME := 
+    3-Dec 4-Dec 5-Dec 6-Dec 7-Dec 8-Dec;
+
+param: BOM: usage := 
+LargePlasticMesh	LargeMeshTop 1
+LargePlasticMesh	LargePlasticFrame 1
+LargePlasticMesh    Doug 12
+
+LargeMetalMesh	LargeMeshTop 1
+LargeMetalMesh	LargeMetalFrame	4
+LargeMetalMesh	Doug	12
+
+MediumMesh	MediumMeshTop 1
+MediumMesh	MediumPlasticFrame 1
+MediumMesh	Doug 8
+
+SmallMesh	SmallMeshTop 1
+SmallMesh	SmallPlasticFrame 4
+SmallMesh	Doug	5
+
+LargePlasticFleece	LargeFleeceTop 1
+LargePlasticFleece	LargePlasticFrame 1
+LargePlasticFleece	Doug	12
+
+MediumFleece	MediumFleeceTop	1
+MediumFleece	MediumPlasticFrame 1
+MediumFleece	Doug	8
+
+SmallFleece	SmallFleeceTop	1
+SmallFleece	SmallPlasticFrame 1
+SmallFleece	Doug	5
+
+LargeMetalFleece	LargeFleeceTop 1
+LargeMetalFleece	LargeMetalFrame	1
+LargeMetalFleece	Doug	15
+
+LargeFleeceTop	Fleece	36
+LargeFleeceTop	Casing	132
+LargeFleeceTop	Doug	25
+
+LargeFleeceTopJ	FleeceJ	36
+LargeFleeceTopJ	CasingJ	132
+LargeFleeceTopJ	Janey	20
+
+MediumFleeceTop	Fleece	24
+MediumFleeceTop	Casing	108
+MediumFleeceTop	Doug	20
+
+MediumFleeceTopJ	FleeceJ	24
+MediumFleeceTopJ	CasingJ	108
+MediumFleeceTopJ	Janey 	15
+
+SmallFleeceTop	Fleece	18
+SmallFleeceTop	Casing	84
+SmallFleeceTop	FleeceScrap	-1
+SmallFleeceTop	Doug	15
+
+SmallFleeceTopJ	FleeceJ	18
+SmallFleeceTopJ	CasingJ	84
+SmallFleeceTopJ	FleeceScrapJ	-1
+SmallFleeceTopJ	Janey 10
+
+SmallPillow	FleeceScrap	1
+SmallPillow	Doug	3
+
+SmallPillowJ	FleeceScrapJ	1
+SmallPillowJ	Janey	3
+
+MeshBag	Loops	2
+MeshBag	Doug	3
+MeshBag	MeshScrap	1
+
+MeshBagJ	LoopsJ	2
+MeshBagJ	Janey	3
+MeshBagJ	MeshScrapJ	1
+
+SmallMeshTop Mesh	24
+SmallMeshTop Casing	84
+SmallMeshTop Doug	4
+SmallMeshTop MeshScrap	-1
+
+SmallMeshTopJ MeshJ	24
+SmallMeshTopJ CasingJ	84
+SmallMeshTopJ Janey	5
+SmallMeshTopJ MeshScrapJ	-1
+
+MediumMeshTop Mesh	24
+MediumMeshTop Casing	108
+MediumMeshTop Doug 20
+
+MediumMeshTopJ MeshJ	24
+MediumMeshTopJ CasingJ	108
+MediumMeshTopJ Janey 10
+
+LargeMeshTop Mesh	36
+LargeMeshTop Casing	132
+LargeMeshTop Doug	12
+
+LargeMeshTopJ MeshJ	36
+LargeMeshTopJ CasingJ	132
+LargeMeshTopJ Janey 10
+
+SmallPlasticFrame PlasticLegs	4
+SmallPlasticFrame 24PlasticRod	2
+SmallPlasticFrame 18PlasticRod	2
+
+MediumPlasticFrame PlasticLegs	4
+MediumPlasticFrame 24PlasticRod	2
+MediumPlasticFrame 30PlasticRod	2
+
+LargePlasticFrame PlasticLegs	4
+LargePlasticFrame 36PlasticRod	2
+LargePlasticFrame 30PlasticRod	2
+
+LargeMetalFrame MetalLegs	4
+LargeMetalFrame 36PlasticRod	2
+LargeMetalFrame 30PlasticRod	2
+
+SmallQuilt SmallQuiltTop 1
+SmallQuilt SmallPlasticFrame 1
+SmallQuilt Doug 5
+
+SpoiledDogBundle SmallPlasticFrame 1
+SpoiledDogBundle SmallMeshTop 1
+SpoiledDogBundle SmallFleeceTop 1
+SpoiledDogBundle SmallPillow 1
+
+LargeBundle LargePlasticFrame 1
+LargeBundle LargeMeshTop 1
+LargeBundle LargeFleeceTop 1
+
+MediumBundle MediumPlasticFrame 1
+MediumBundle MediumMeshTop 1
+MediumBundle MediumFleeceTop 1
+
+SmallBundle SmallPlasticFrame 1
+SmallBundle SmallFleeceTop 1
+SmallBundle SmallMeshTop 1
+;
+
+param: cost := 
+18PlasticRod	30
+24PlasticRod	36
+30PlasticRod	42
+30MetalRod	40
+36PlasticRod	48
+36MetalRod	50
+PlasticLegs	100
+MetalLegs	50
+Fleece	400
+Mesh	600
+Casing	100
+Loops	40
+Janey   20
+SmallQuiltTop 15
+FabricBundle 830
+LargeBox 75
+SmallBox 50
+TransferD2J 30
+TransferJ2D 50
+;		
+
+param: ord_qty := 
+18PlasticRod	25
+24PlasticRod	25
+30PlasticRod	25
+30MetalRod	5
+36PlasticRod	25
+36MetalRod	5
+PlasticLegs	60
+MetalLegs	25
+Fleece	1440
+Mesh	3600
+Casing	1800
+Loops	60
+Janey 60
+SmallQuiltTop 1
+LargeBox 20
+SmallBox 20
+FabricBundle 1
+TransferD2J 1
+TransferJ2D 1
+;
+
+param min_buy :=
+    30MetalRod 2
+    36MetalRod 2
+    Loops 2
+    Janey 4;
+
+param baseprice (tr): Store Show Online:= 
+    LargeMetalFleece      100 0 0
+    LargePlasticFleece    60 0 65
+    LargePlasticMesh      50 0 55
+    LargeMetalMesh        80 0 0
+    MediumFleece          50 0 55
+    MediumMesh            30 0 35
+    SmallFleece           30 65 35
+    SmallMesh             20 45 25
+    LargeFleeceTop        30 0 25
+    MediumFleeceTop       25 0 20
+    SmallFleeceTop        15 40 15
+    18PlasticRod          3 0 0
+    24PlasticRod          4 0 0
+    30PlasticRod          5 0 0
+    30MetalRod            8 0 0
+    36PlasticRod          6 0 0
+    36MetalRod            12 0 0
+    PlasticLegs           3 0 0 
+    MetalLegs             5 0 0
+    SmallPillow           5 15 6
+    SmallQuiltTop		  0 30 0
+    SmallQuilt			  0 55 0
+    SpoiledDogBundle	  0 125 0
+    SmallBundle			  0 40 0
+    MediumBundle		  0 55 0
+    LargeBundle			  0 80 0;
+
+param p_disc := 0.02;
+
+param demand := 
+[Store, *, *]: 3-Dec 4-Dec 5-Dec 6-Dec 7-Dec 8-Dec:=
+LargeMetalFleece   4   4   4   4   4   2
+LargePlasticFleece  5   5   5   5   5   2
+LargePlasticMesh    6   6   6   6   6   2
+LargeMetalMesh      1   2   3   4   5   2
+MediumFleece        6   7   8   9   10  2
+MediumMesh          6   7   8   9   10  2
+SmallFleece         6   7   8   9   10  2
+SmallMesh           5   6   7   8   9   2
+LargeFleeceTop      10  0   0   0   10  2
+MediumFleeceTop     5   0   0   0   5   2
+SmallFleeceTop      8   0   0   0   8   2
+18PlasticRod        2   0   0   0   0   0
+24PlasticRod        4   0   0   0   0   0
+30PlasticRod        6   0   0   0   0   0
+30MetalRod          8   0   0   0   0   0
+36PlasticRod        10  0   0   0   0   0
+36MetalRod          5   0   0   0   0   0
+PlasticLegs         5   0   0   0   0   0
+MetalLegs           10  0   0   0   0   0
+SmallPillow         12  14  15  15  15  5
+
+[Show, *, *]: 3-Dec 4-Dec 5-Dec 6-Dec 7-Dec 8-Dec:=
+SmallFleece			0	0	0	0	10  0
+SmallMesh			0	0	0	0	10  0
+SmallFleeceTop		0	0	0	0	5   0
+SmallPillow			0	0	0	0	20  0
+MeshBag 			0	0	0	0	10  0
+SmallQuiltTop		0   0   0   0    5  0
+SmallQuilt			0   0   0   0   10  0
+SpoiledDogBundle    0   0   0   0    5  0
+
+[Online, *, *]: 3-Dec 4-Dec 5-Dec 6-Dec 7-Dec 8-Dec:=
+LargePlasticFleece  1   2   3   1   1   0
+LargePlasticMesh    2   2   2   2   3   0
+MediumFleece        3   2   3   1   2   0
+MediumMesh          1   2   4   1   3   0
+SmallFleece         2   2   3   2   2   0
+SmallMesh           3   2   2   3   3   0
+LargeFleeceTop      1   2   3   4   5   0
+MediumFleeceTop     2   3   5   6   6   0
+SmallFleeceTop      3   2   4   7   7   0
+SmallPillow         1   3   2   2   3   0
+SmallBundle			2   0   0   0   0   2
+MediumBundle		5   0   0   0   0   5
+LargeBundle			5   0   0   0   0   5;
+
+param supply: 3-Dec 4-Dec 5-Dec 6-Dec 7-Dec 8-Dec:=
+18PlasticRod    10    0    0    0    0    0
+24PlasticRod    12    0    0    0    0    0
+30PlasticRod    7     0    0    0    0    0
+30MetalRod      6     0    0    0    0    0
+36PlasticRod    8     0    0    0    0    0
+36MetalRod      12    0    0    0    0    0
+PlasticLegs     60    0    0    0    0    0
+MetalLegs       32    0    0    0    0    0
+Fleece          2880  0    0    0    0    0
+Mesh            1440  0    0    0    0    0
+Casing          7200  0    0    0    0    0
+Doug            600   600  600  600  600  600
+Money           2000  0    0    0    0    0
+;
+
+param max_buy:=
+3-Dec Janey 8
+4-Dec Janey 4
+5-Dec Janey 8
+6-Dec  Janey 8
+7-Dec  Janey 8
+8-Dec Janey 8
+;
+
+
+param: SUB_TRIPLES: sub_usage penalty mix := 
+LargeMeshTop	Casing	Loops	22	-1	0
+MediumMeshTop	Casing	Loops	18	-1	0
+SmallMeshTop	Casing	Loops	14	-1	0
+LargeMeshTopJ	CasingJ	LoopsJ	22	-1	0
+MediumMeshTopJ	CasingJ	LoopsJ	18	-1	0
+SmallMeshTopJ	CasingJ	LoopsJ	14	-1	0
+;
+
+param: receive_offset:= 
+SmallQuiltTop 2;

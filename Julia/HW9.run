@@ -1,0 +1,213 @@
+reset;
+
+option solver gurobi;
+option gurobi_options 'MIPGap=.02' ; 
+option gurobi_options 'MIPGapABs=50';
+#option gurobi_options 'MIPGap=.11 ' ' MIPGapABs=200'; # for testing, fast runs
+
+model HW9DATA.mod;
+
+# Uncomment the appropriate data files to test different datasets
+# data tiny_make.dat;        # Smaller dataset focusing on "Make" operations
+# data tiny_make_scrap&stock.dat; # Dataset including scrap and stock parameters
+# data tiny_Buy.dat;         # Dataset focusing on "Buy" operations
+# data tiny_ship.dat;        # Dataset focusing on "Ship" operations
+# data tiny_min_max_buy.dat; # Dataset including minimum and maximum buy quantities
+# data tiny_offset.dat;         # Dataset including offsets for specific operations
+# data tiny_sub.dat;         # Dataset including substitution data
+# data tiny_dougtime.dat;    # Dataset including Doug Time
+# data tiny_coproduct.dat;	 # Dataset with co-product 
+# data tiny_nolate.dat;		 # Dataset with no late shipment
+# data tiny_assistant.dat;	 # Dataset with assistant
+
+#HW 9 Tinys
+#data tiny_FabricBundle.dat;
+#data tiny_Boxes.dat;
+data tiny_locations.dat;
+
+# THE REAL DEAL
+#data HW9.dat;
+
+# Creating sets dynamically based on parameters
+
+# Make set of Make operations using string splicing (e.g., "Make_ProductName")
+set MAKE := setof {p in PROD} ("Make_" & p);
+
+# Create a set of Buy operations for resources that can be purchased
+set BUY := setof {r in CAN_BUY} ("Buy_" & r);
+
+# Create a set of Ship operations for customer demands
+set SHIP := setof {(c, r) in HAS_DEMAND} ("Ship_" & r & "_" & c);
+
+# Create the set of transfer operations FROM DOUG TO JANEY
+set TRANSFER_D2J := setof{r in RAW : match(r,"J") > 1} ("Transfer_" & r);
+
+# Create the set of transfer operations FROM JANEY TO DOUG
+set TRANSFER_J2D := setof{r in PROD : match(r,"J") > 1} ("Transfer_" & r);
+
+# Create a comprehensive set of all operations by combining MAKE, BUY, SHIP, and other operations
+set OPERATIONS := MAKE union BUY union SHIP union {"Get_Deliver", "Get_Pickup"} union TRANSFER_D2J union TRANSFER_J2D;
+
+# Create Bill of Resources (BOR) for Make operations with assembly processes AT DOUG
+set MAKE_BOR := setof {(p, r) in BOM} ("Make_" & p, r);
+
+# BOR for Buy operations, linking resources to money or pickup time
+set BUY_BOR := setof {r in CAN_BUY} ("Buy_" & r, "Money");
+set BUY_BOR_PICKUP := setof {r in CAN_BUY diff CAPACITY} ("Buy_" & r, "Pickup_Time");
+
+# BOR for Ship operations, including Deliver_Time
+set SHIP_BOR := setof {(c, r) in HAS_DEMAND} ("Ship_" & r & "_" & c, r);
+set SHIP_BOR_DELIVER := setof {(c, r) in HAS_DEMAND : c != "Show"} ("Ship_" & r & "_" & c, "Deliver_Time");
+
+# New sets for using boxes to ship to online customers
+set LARGE_PRODUCTS := setof {(p,r) in BOM: r == "36PlasticRod" or r == "36MetalRod"} p ;
+set SHIP_LARGEBOX := setof {(c,r) in HAS_DEMAND: c == "Online" and r in LARGE_PRODUCTS} ("Ship_" & r & "_" & c, "LargeBox");
+set SHIP_SMALLBOX := setof {(c,r) in HAS_DEMAND: c == "Online" and r not in LARGE_PRODUCTS} ("Ship_" & r & "_" & c, "SmallBox");
+
+# BOR for converting Doug Time to Pickup and Delivery times
+set DELIVER_BOR := setof {t in DELIVER_PICKUP} ("Get_Deliver", t);
+set PICKUP_BOR := setof {t in DELIVER_PICKUP} ("Get_Pickup", t);
+
+# BOR for transfering stuff from Doug to Janey
+# Will be using the Doug resource and producing the Janey, so BOR should use the Doug resource.
+set TRANSFER_BOR_D2J := setof{r in RAW : match(r,"J") > 1} ("Transfer_" & r, substr(r,1,match(r,"J")-1));
+set TRANSFER_BOR_D2J_CAP := setof{r in RAW : match(r,"J") > 1} ("Transfer_" & r, "TransferD2J");
+
+# BOR for transfering stuff from Janey to Doug
+# Will be using the Janey resource and producing the Doug, so BOR should use the Janey resource.
+set TRANSFER_BOR_J2D := setof{r in PROD : match(r,"J") > 1} ("Transfer_" & r, r);
+set TRANSFER_BOR_J2D_CAP := setof{r in PROD : match(r,"J") > 1} ("Transfer_" & r, "TransferJ2D");
+
+# Union of all BOR sets
+set BOR := MAKE_BOR union BUY_BOR union SHIP_BOR union DELIVER_BOR union PICKUP_BOR union SHIP_BOR_DELIVER 
+union BUY_BOR_PICKUP union SHIP_LARGEBOX union SHIP_SMALLBOX union TRANSFER_BOR_D2J union TRANSFER_BOR_J2D
+union TRANSFER_BOR_D2J_CAP union TRANSFER_BOR_J2D_CAP;
+
+# Create Bill of Products (BOP) for byproducts
+set MAKE_BOP := setof {(p, r) in BOM} ("Make_" & p, p);
+set MAKE_BOP_COPROD := setof{(p, r) in BOM : usage[p,r] < 0} ("Make_" & p, r);
+set BUY_BOP := setof {r in CAN_BUY} ("Buy_" & r, r);
+set SHIP_BOP := setof {(c, r) in HAS_DEMAND} ("Ship_" & r & "_" & c, "Money");
+
+# Convert Doug Time into Deliver and Pickup times
+set DELIVER_BOP := {("Get_Deliver", "Deliver_Time")};
+set PICKUP_BOP := {("Get_Pickup", "Pickup_Time")};
+
+#Initializing set for the fabric bundle so it can be in the BOP
+set BUY_FABRICBUNDLE_FLEECE := {("Buy_FabricBundle", "Fleece")};
+set BUY_FABRICBUNDLE_MESH := {("Buy_FabricBundle", "Mesh")};
+set BUY_FABRICBUNDLE_CASING := {("Buy_FabricBundle", "Casing")};
+
+# BOP for transfering stuff from Doug to Janey
+# Will be using the Doug resource and producing the Janey, so BOP should produce the Janey resource.
+set TRANSFER_BOP_D2J := setof{r in RAW : match(r,"J") > 1} ("Transfer_" & r, r);
+
+# BOR for transfering stuff from Janey to Doug
+# Will be using the Janey resource and producing the Doug, so BOR should produce the Doug resource.
+set TRANSFER_BOP_J2D := setof{r in PROD : match(r,"J") > 1} ("Transfer_" & r, substr(r,1,match(r,"J")-1));
+
+# Union of all BOP sets
+set BOP := MAKE_BOP union MAKE_BOP_COPROD union BUY_BOP union SHIP_BOP union DELIVER_BOP union PICKUP_BOP 
+union BUY_FABRICBUNDLE_FLEECE union BUY_FABRICBUNDLE_MESH union BUY_FABRICBUNDLE_CASING
+union TRANSFER_BOP_J2D union TRANSFER_BOP_D2J;
+
+# Create O_SUB_TRIPLES for substitution operations
+set O_SUB_TRIPLES within {OPERATIONS, RESOURCE, RESOURCE} := setof {(p, r, j) in SUB_TRIPLES} ("Make_" & p, r, j);
+
+# Create O_SUB_PAIRS for substitution within BOR
+set O_SUB_PAIRS within BOR := setof {(o, r, j) in O_SUB_TRIPLES} (o, r);
+
+# Create O_PROD_SUB_PAIRS which is every product and substitute resource we use
+set O_PROD_SUB_PAIRS within {OPERATIONS, RESOURCE} := setof {(p, r, j) in SUB_TRIPLES} ("Make_" & p, j);
+
+# Define usages for resources
+param usages {BOR} default 0; # Can't reuse "usage" because it's in old data file, so renamed to "usages"
+
+# Assign values to BOR based on the original usage values
+
+# Assign MAKE usages: Resources required to make products
+let {(p, r) in BOM} usages["Make_" & p, r] := usage[p, r];
+
+# Assign BUY usages: Money required to buy resources
+let {r in CAN_BUY} usages["Buy_" & r, "Money"] := cost[r];
+
+# Assign SHIP usages: Products required for shipping
+let {(c, r) in HAS_DEMAND} usages["Ship_" & r & "_" & c, r] := 1;
+
+# Assign Shipping usages of boxes
+let {(c,r) in HAS_DEMAND: c == "Online" and r in LARGE_PRODUCTS} usages["Ship_" & r & "_" & c, "LargeBox"] := 1;
+let {(c,r) in HAS_DEMAND: c == "Online" and r not in LARGE_PRODUCTS} usages["Ship_" & r & "_" & c, "SmallBox"] := 1; 
+
+# Convert Doug Time to Pickup and Delivery times (each unit = 120 minutes)
+let {t in DELIVER_PICKUP} usages["Get_Pickup", t] := 120;
+let {t in DELIVER_PICKUP} usages["Get_Deliver", t] := 120;
+
+# Assign transfer usages
+# Use DOUG raw material DOUG -> Janey
+let {r in RAW : match(r,"J") > 1} usages["Transfer_" & r, substr(r,1,match(r,"J")-1)] := 1;
+# Use $30 Doug -> janey
+let {r in RAW : match(r,"J") > 1} usages["Transfer_" & r, "TransferD2J"] := .0001;
+
+# Use Janey prod
+let {r in PROD : match(r,"J") > 1} usages["Transfer_" & r, r] := 1;
+# Use $50 Janey -> Doug
+### THIS IS WRONG!!! $50 per every transfer - not right
+let {r in PROD : match(r,"J") > 1} usages["Transfer_" & r, "TransferJ2D"] := .0001;
+
+# Define produce values for resources
+param produce {BOP} default 0;
+
+# Assign MAKE production for co-products (negative usage)
+let {(p, r) in BOM : usage[p, r] < 0} produce["Make_" & p, r] := -1 * usage[p, r];
+
+# Assign MAKE production for primary products
+let {(p, r) in BOM} produce["Make_" & p, p] := 1;
+
+# Assign BUY production: Order quantity for each resource
+let {r in CAN_BUY} produce["Buy_" & r, r] := ord_qty[r];
+
+# Assign Fabric Bundle Production
+let produce["Buy_FabricBundle", "Fleece"] := 1800;
+let produce["Buy_FabricBundle", "Mesh"] := 1800;
+let produce["Buy_FabricBundle", "Casing"] := 10800;
+
+# Assign SHIP production: Monetary value for each product shipped
+let {(c, r) in HAS_DEMAND} produce["Ship_" & r & "_" & c, "Money"] := baseprice[c, r];
+
+# Assign Deliver_Time usage for SHIP (minimal value for unlimited delivery in 2 hours)
+let {(c, r) in HAS_DEMAND : c != "Show"} usages["Ship_" & r & "_" & c, "Deliver_Time"] := .0001;
+
+# Assign Pickup_Time usage for BUY (minimal value for unlimited pickup in 2 hours)
+let {r in CAN_BUY diff CAPACITY} usages["Buy_" & r, "Pickup_Time"] := .0001;
+
+# Define production for Doug Time conversion to Pickup and Delivery times
+let produce["Get_Pickup", "Pickup_Time"] := 1;
+let produce["Get_Deliver", "Deliver_Time"] := 1;
+
+# Assign transfer production
+# Produce JANEY raw material
+let {r in RAW : match(r,"J") > 1} produce["Transfer_" & r, r] := 1;
+# Produce Doug prod
+let {r in PROD : match(r,"J") > 1} produce["Transfer_" & r, substr(r,1,match(r,"J")-1)] := 1;
+
+# Define offsets for Ship operations (money comes 1 day later)
+param offset {BOP} default 0;
+let {(c, r) in HAS_DEMAND : c != "Show"} offset["Ship_" & r & "_" & c, "Money"] := 1;
+# Define offset for Ship to Show operation
+# Since grandpa leaves for the Show on Friday and Gets back on Sunday, offset will be 2
+let {(c, r) in HAS_DEMAND : c == "Show"} offset["Ship_" & r & "_" & c, "Money"] := 2;
+
+# Offset for the stuf that goes from Janey to Doug
+let {r in CAN_BUY} offset["Buy_" & r, r] := receive_offset[r];
+
+# Define penalty for substitution operations
+param O_penalty {O_SUB_TRIPLES} default 0;
+
+# Define substitution usages for specific triples
+param sub_usages {(o, r, j) in O_SUB_TRIPLES} = sum {(p, r, j) in SUB_TRIPLES} if o == 'Make_' & p then sub_usage[p, r, j] else 0;
+
+# Define operation penalty to avoid unnecessary operations
+param op_pen {OPERATIONS} default .01; # Added to avoid unnecessary stock costs of BOM
+
+# Load the main model
+model HW9.mod;
