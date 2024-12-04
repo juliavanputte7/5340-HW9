@@ -1,0 +1,367 @@
+# data for dogbed Multi-level, Multi-period with subs
+data;
+
+set MATERIAL:= LargeMMeshBed LargePMeshBed MediumPMeshBed SmallPMeshBed
+LargeMFleeceBed LargePFleeceBed MediumPFleeceBed SmallPFleeceBed
+LMFrame LPFrame MPFrame SPFrame
+LFleeceTop MFleeceTop SFleeceTop LMeshTop MMeshTop SMeshTop # set of products
+LQuiltTop MQuiltTop SQuiltTop
+Mesh Fleece PLegs Casing 36PRods 30PRods 24PRods 18PRods
+Loops MLegs 36MRods 30MRods FleeceScrap Pillow MeshScrap Money
+SmallBox BigBox
+SmallQuiltBed SpoiledDogBundle LargeBundle MediumBundle SmallBundle;
+
+set BIG_ITEMS := LargeMMeshBed LargePMeshBed LargeMFleeceBed LargePFleeceBed LMFrame LPFrame
+				LFleeceTop 36PRods 36MRods;
+
+set CUSTOMER:= Store DogShow Online;
+
+set BUNDLES := FabricBundle MetalBundle;
+
+set CAPACITY:= DougTime JaneyTime Transport_Doug_to_Janey Transport_Janey_to_Doug;
+
+set QUILTED_PRODUCTS := SQuiltTop MQuiltTop LQuiltTop;
+
+set LOCATIONS := DougHouse, JaneyStudio;
+
+set TIME := 3-Dec	4-Dec	5-Dec	6-Dec	7-Dec	8-Dec;
+
+set TRANSPORTABLE := Fleece Mesh Casing LFleeceTop MFleeceTop SFleeceTop LMeshTop
+					MMeshTop SMeshTop Pillow; #Bag;
+
+param: BOM: usage := #list for BOM USUAL INPUT FORMAT FROM MRP SYSTEM
+	LargeMMeshBed, LMeshTop 1
+	LargeMMeshBed, LMFrame 1
+	LargeMMeshBed, DougTime 15
+	
+	LargePMeshBed, LMeshTop 1
+	LargePMeshBed, LPFrame 1
+	LargePMeshBed, DougTime 12
+	
+	LargeMFleeceBed, LFleeceTop 1
+	LargeMFleeceBed, LMFrame 1
+	LargeMFleeceBed, DougTime 15
+	
+	LargePFleeceBed, LFleeceTop 1
+	LargePFleeceBed, LPFrame 1
+	LargePFleeceBed, DougTime 12
+	
+	MediumPFleeceBed, MFleeceTop 1
+	MediumPFleeceBed, MPFrame 1
+	MediumPFleeceBed, DougTime 8
+	
+	MediumPMeshBed, MMeshTop 1
+	MediumPMeshBed, MPFrame 1
+	MediumPMeshBed, DougTime 8
+	
+	SmallPMeshBed, SMeshTop 1
+	SmallPMeshBed, SPFrame 1
+	SmallPMeshBed, DougTime 5
+	
+	SmallPFleeceBed, SFleeceTop 1
+	SmallPFleeceBed, SPFrame 1
+	SmallPFleeceBed, DougTime 5
+	
+	LMeshTop Mesh 36
+	LMeshTop Casing 132
+	#LMeshTop SewTime 12
+	LMeshTop DougTime 12
+	
+	MMeshTop, Mesh 24
+	MMeshTop, Casing 108
+	#MMeshTop, SewTime 8
+	MMeshTop, DougTime 8
+	
+	SMeshTop, Mesh 18
+	SMeshTop, Casing 84
+	#SMeshTop, SewTime 4
+	SMeshTop, DougTime 4
+	SMeshTop, MeshScrap -1
+	
+	LFleeceTop Fleece 36
+	LFleeceTop Casing 132
+	#LFleeceTop SergerTime 25
+	LFleeceTop DougTime 25
+	
+	MFleeceTop, Fleece 24
+	MFleeceTop, Casing 108
+	#MFleeceTop, SergerTime 20
+	MFleeceTop, DougTime 20
+	
+	SFleeceTop, Fleece 18
+	SFleeceTop, Casing 84
+	#SFleeceTop, SergerTime 15
+	SFleeceTop, DougTime 15
+	SFleeceTop, FleeceScrap -1
+	
+	MPFrame, PLegs 4
+	MPFrame, 24PRods 2
+	MPFrame, 30PRods 2
+	
+	SPFrame, PLegs 4
+	SPFrame, 24PRods 2
+	SPFrame, 18PRods 2
+	
+	LPFrame, PLegs 4
+	LPFrame, 36PRods 2
+	LPFrame, 30PRods 2
+	
+	LMFrame, MLegs 4
+	LMFrame, 36MRods 2
+	LMFrame, 30MRods 2
+	
+	Pillow FleeceScrap 1
+	Pillow DougTime 3
+	
+	#Bag MeshScrap 1
+	#Bag Loops 2
+	#Bag DougTime 3
+	
+	SpoiledDogBundle SQuiltTop 1
+	SpoiledDogBundle MQuiltTop 1
+	SpoiledDogBundle LQuiltTop 1
+	
+	LargeBundle LFleeceTop 1
+	LargeBundle LargePMeshBed 1
+	
+	MediumBundle MFleeceTop 1
+	MediumBundle MediumPMeshBed 1
+	
+	SmallBundle SFleeceTop 1
+	SmallBundle SmallPMeshBed 1
+	
+	SmallQuiltBed SQuiltTop 1
+	SmallQuiltBed SPFrame 1
+	SmallQuiltBed DougTime 5
+	;
+	
+	
+#	DougShipTime DougTime 120
+#	DougBuyTime DougTime 120
+;
+param: cost := #resource cost
+	# defaulted to 0 if not specified
+	Fleece 640
+	Mesh 200
+	Casing 100
+	MLegs 40
+	PLegs 100
+	18PRods 30
+	24PRods 36
+	30PRods 42
+	36PRods 48
+	30MRods 40
+	36MRods 50
+	JaneyTime 20
+	DougTime 5
+	BigBox 10
+	SmallBox 5
+	
+	SQuiltTop 15
+	MQuiltTop 25
+	LQuiltTop 35
+
+	Transport_Doug_to_Janey 30
+	Transport_Janey_to_Doug 50
+;
+
+param: bundleCost :=
+	FabricBundle 800
+	MetalBundle	200
+;
+
+param: ord_qty := #resource
+	# order quantity defaulted to 0 if not specified
+	Fleece 1440
+	Mesh 3600
+	Casing 1800 # not in data, assuming $2/yard
+	MLegs 40
+	PLegs 100
+	18PRods 25
+	24PRods 25
+	30PRods 25
+	36PRods 25
+	30MRods 5
+	36MRods 5
+	JaneyTime 60
+	DougTime 60
+	BigBox 10
+	SmallBox 10
+	SQuiltTop 1
+	MQuiltTop 1
+	LQuiltTop 1
+
+	Transport_Doug_to_Janey 1
+	Transport_Janey_to_Doug 1
+	
+	SpoiledDogBundle 1
+	LargeBundle 1
+	MediumBundle 1
+	SmallBundle 1
+;
+
+param: bundle_qty :=
+	FabricBundle, Fleece 1800
+	FabricBundle, Mesh 1800
+	FabricBundle, Casing 7200
+	
+	MetalBundle, 36MRods 20
+	MetalBundle, 30MRods 20
+	MetalBundle, MLegs 20
+;
+
+param min_buy := # switched to number of ord_qty
+	30MRods 2
+	36MRods 2
+	JaneyTime 4
+	SQuiltTop 3
+	MQuiltTop 3
+	LQuiltTop 3
+	
+	Fleece 1
+	Mesh 1
+	Casing 1
+	MLegs 1
+	PLegs 1
+	18PRods 1
+	24PRods 1
+	30PRods 1
+	36PRods 1
+	DougTime 1
+	BigBox 1
+	SmallBox 1
+	
+	Transport_Doug_to_Janey 1
+	Transport_Janey_to_Doug 1
+	
+	SpoiledDogBundle 1
+	LargeBundle 1
+	MediumBundle 1
+	SmallBundle 1
+;
+
+param max_buy : 3-Dec	4-Dec	5-Dec	6-Dec	7-Dec	8-Dec :=
+	JaneyTime 8 8 0 8 8 0
+	DougTime 10 10 10 10 10 10
+;
+
+param baseprice (tr) : Store Online DogShow :=
+
+	LargeMFleeceBed 100 0 0
+	LargePFleeceBed 60 65 0
+	LargePMeshBed 50 55 0
+	LargeMMeshBed 80 0 0
+	MediumPFleeceBed 50 55 0
+	MediumPMeshBed 30 35 0
+	SmallPFleeceBed 30 35 65
+	SmallPMeshBed 20 25 45
+	LFleeceTop 30 25 0
+	MFleeceTop 25 20 0
+	SFleeceTop 15 15 40
+	18PRods 3 0 0
+	24PRods 4 0 0
+	30PRods 5 0 0
+	30MRods 8 0 0
+	36PRods 6 0 0
+	36MRods 12 0 0
+	PLegs 3 0 0
+	MLegs 5 0 0
+	Pillow 5 6 15
+	#Bag 8 10 10
+	
+	SQuiltTop 0 0 30
+	MQuiltTop 0 0 40
+	LQuiltTop 0 0 50
+	
+	SpoiledDogBundle 125 0 125
+	LargeBundle 80 80 80
+	MediumBundle 55 55 55
+	SmallBundle 40 40 40
+;
+
+param demand:=
+[Store,*,*]: 3-Dec	4-Dec	5-Dec	6-Dec	7-Dec	8-Dec :=
+	LargeMFleeceBed 4 4 4 4 4 2
+	LargePFleeceBed 5 5 5 5 5 2
+	LargePMeshBed 6 6 6 6 6 2
+	LargeMMeshBed 1 2 3 4 5 2
+	MediumPFleeceBed 6 7 8 9 10 2
+	MediumPMeshBed 6 7 8 9 10 2
+	SmallPFleeceBed 6 7 8 9 10 2
+	SmallPMeshBed 5 6 7 8 9 2
+	LFleeceTop 10 0 0 0 10 2
+	MFleeceTop 5 0 0 0 5 2
+	SFleeceTop 8 0 0 0 8 2
+	18PRods 2 0 0 0 0 0
+	24PRods 4 0 0 0 0 0
+	30PRods 6 0 0 0 0 0 
+	30MRods 8 0 0 0 0 0
+	36PRods 10 0 0 0 0 0
+	36MRods 5 0 0 0 0 0
+	PLegs 5 0 0 0 0 0
+	MLegs 10 0 0 0 0 0
+	Pillow 12 14 15 15 15 5
+	
+[DogShow,*,*]:
+3-Dec	4-Dec	5-Dec	6-Dec	7-Dec	8-Dec :=
+	SmallPFleeceBed 0 0 0 0 10 0
+	SmallPMeshBed 0 0 0 0 15 0
+	SFleeceTop 0 0 0 0 5 0
+	Pillow 0 0 0 0 20 0
+	#Bag 0 0 0 0 30 0
+	
+	SQuiltTop 0 0 0 0 5 0
+	MQuiltTop 0 0 0 0 5 0
+	LQuiltTop 0 0 0 0 5 0
+	
+	SpoiledDogBundle 0 0 0 0 5 0
+	LargeBundle 0 0 0 0 5 0
+	MediumBundle 0 0 0 0 5 0
+	SmallBundle 0 0 0 0 5 0
+
+[Online,*,*]:
+3-Dec 4-Dec 5-Dec 6-Dec 7-Dec 8-Dec :=
+    LargePFleeceBed  1 2 3 1 1 0
+    LargePMeshBed    2 2 2 2 3 0
+    MediumPFleeceBed 3 2 3 1 2 0
+    MediumPMeshBed   1 2 4 1 3 0
+    SmallPFleeceBed  2 2 3 2 2 0
+    SmallPMeshBed    3 2 2 3 3 0
+    LFleeceTop       1 2 3 4 5 0
+    MFleeceTop       2 3 5 6 6 0
+    SFleeceTop       3 2 4 7 7 0
+    Pillow           1 3 2 2 3 0
+    LargeBundle      5 0 0 0 5 0
+    MediumBundle     5 0 0 0 5 0
+    SmallBundle      2 0 0 0 2 0
+;
+
+param supply:=
+	18PRods 3-Dec DougHouse 10
+	24PRods 3-Dec DougHouse 12
+	30PRods 3-Dec DougHouse 7
+	30MRods 3-Dec DougHouse 6
+	36PRods 3-Dec DougHouse 8
+	36MRods 3-Dec DougHouse 12
+	PLegs 3-Dec DougHouse 60
+	MLegs 3-Dec DougHouse 32
+	Fleece 3-Dec DougHouse 2880
+	Mesh 3-Dec DougHouse 1440
+	Casing 3-Dec DougHouse 7200
+	Money 3-Dec DougHouse 2000
+;
+
+
+param: SUB_TRIPLES: subusage :=
+#Define the set SUB_TRIPLES as the list is processed
+	LMeshTop, Casing, Loops 26
+	MMeshTop, Casing, Loops 22
+	SMeshTop, Casing, Loops 18
+	LFleeceTop, DougTime, JaneyTime 20
+	MFleeceTop, DougTime, JaneyTime 15
+	SFleeceTop DougTime, JaneyTime 10
+	LMeshTop, DougTime, JaneyTime 15
+	MMeshTop, DougTime, JaneyTime 10
+	SMeshTop DougTime, JaneyTime 5
+	Pillow DougTime, JaneyTime 3
+;
