@@ -1,0 +1,71 @@
+load amplxl.dll;
+option solver gurobi;
+
+option gurobi_options 'MIPGap=.02 ' ' MIPGapABs=50';
+model HW9.mod;
+#data tiny.dat;
+
+table s_MakeOps IN "amplxl" "HW9_data.xlsx":
+	MAKE_OPS<-[MAKE_OPS];
+table s_BuyOps IN "amplxl" "HW9_data.xlsx":
+	BUY_OPS<-[BUY_OPS];
+
+table s_ShipOps IN "amplxl" "HW9_data.xlsx":
+	SHIP_OPS<-[SHIP_OPS];
+	
+table s_OtherOps IN "amplxl" "HW9_data.xlsx":
+	OTHER_OPS<-[OTHER_OPS];
+	
+table s_Time IN "amplxl" "HW9_data.xlsx":
+	TIME<-[TIME];
+
+table s_Material IN "amplxl" "HW9_data.xlsx": 
+	MATERIAL<-[MATERIAL];
+table s_Capacity IN "amplxl" "HW9_data.xlsx":
+	CAPACITY<-[CAPACITY];
+
+table s_BOR IN "amplxl" "HW9_data.xlsx":
+	BOR<-[BOR_1,BOR_2],usage;
+	
+
+table s_BOP IN "amplxl" "HW9_data.xlsx":
+	BOP<-[BOP_1,BOP_2],produce;
+	
+table s_Offset IN "amplxl" "HW9_data.xlsx": 
+	[offset_ops,Material],offset;
+
+let p_disc := 0.02;
+	
+table s_Supply IN "amplxl" "HW9_data.xlsx": 
+	[Material,TIME],supply;
+
+table s_Minbuy IN "amplxl" "HW9_data.xlsx":
+	[MIN_BUY_OPS],min_buy;
+
+table s_Max IN "amplxl" "HW9_data.xlsx":
+	[Max_Buy_Ops,TIME],max_op;
+
+read table s_MakeOps;
+read table s_BuyOps;
+read table s_ShipOps;
+read table s_OtherOps;
+read table s_Time;
+read table s_Material;
+read table s_Capacity;
+read table s_BOR;
+read table s_BOP;
+read table s_Offset;
+read table s_Supply;
+read table s_Minbuy;
+read table s_Max;
+
+
+solve;
+display TotRev;
+display Prft;
+display Amt_Ops;
+#table Amt_Ops OUT "amplxl" "HW9_output.xlsx":
+	#[OPERATION,TIME], Amt_Ops;
+#write table Amt_Ops;
+
+

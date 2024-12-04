@@ -1,0 +1,655 @@
+data;
+set MAKE_OPS := Make_LMMBed, Make_LPMBed, Make_LMFBed, Make_LPFBed, Make_MPFBed, Make_MPMBed,
+				Make_SPMBed, Make_SPFBed, Make_LMTop, Make_MMTop, Make_SMTop, Make_LFTop,
+				Make_MFTop, Make_SFTop, Make_MPFrame, Make_SPFrame, Make_LPFrame, Make_LMFrame,
+				Make_Pillow, Make_Bag, Make_MMTop_LJ, Make_LMTop_LJ, Make_SMTop_LJ,
+				Make_MMTop_CJ, Make_LMTop_CJ, Make_SMTop_CJ, Make_MMTop_LD, Make_LMTop_LD,
+				Make_SMTop_LD, Make_Pillow_J, Make_Bag_J, Make_MFTop_J, Make_LFTop_J,
+				Make_SFTop_J;
+set SHIP_OPS := Ship_Store_LMFBed,Ship_Store_LPFBed,Ship_Store_LPMBed,Ship_Store_LMMBed,
+				Ship_Store_MPFBed,Ship_Store_MPMBed,Ship_Store_SPFBed,Ship_Store_SPMBed,
+				Ship_Store_LFTop,Ship_Store_MFTop,Ship_Store_SFTop,Ship_Store_18PRods,
+				Ship_Store_24PRods,Ship_Store_30PRods,Ship_Store_30MRods,Ship_Store_36PRods,
+				Ship_Store_36MRods,Ship_Store_PLegs,Ship_Store_MLegs,Ship_Store_Pillow,
+				Ship_DogShow_SPFBed,Ship_DogShow_SPMBed,Ship_DogShow_SFTop,Ship_DogShow_Pillow,
+				Ship_DogShow_Bag;
+set BUY_OPS := Buy_18PRods,Buy_24PRods,Buy_30PRods,Buy_30MRods,Buy_36PRods,Buy_36MRods,Buy_PLegs,
+				Buy_MLegs,Buy_Fleece,Buy_Mesh,Buy_Casing,Buy_Loops,Buy_JaneyTime;
+
+set OTHER_OPS := Scrap_Mesh,Scrap_36PRods,Scrap_Loops,Scrap_FScrap,Scrap_Fleece,Scrap_30PRods,
+					Scrap_MLegs,Scrap_MScrap,Scrap_PLegs,Scrap_24PRods,Scrap_36MRods,Scrap_JaneyTime,
+					Scrap_Casing,Scrap_18PRods,Scrap_30MRods,Scrap_DougTime,Scrap_DougTimeOut,
+					Scrap_Dem_Store_LMFBed,
+					Scrap_Dem_Store_LPFBed,Scrap_Dem_Store_LPMBed,Scrap_Dem_Store_LMMBed,
+					Scrap_Dem_Store_MPFBed,Scrap_Dem_Store_MPMBed,Scrap_Dem_Store_SPFBed,
+					Scrap_Dem_Store_SPMBed,Scrap_Dem_Store_LFTop,Scrap_Dem_Store_MFTop,
+					Scrap_Dem_Store_SFTop,Scrap_Dem_Store_18PRods,Scrap_Dem_Store_24PRods,
+					Scrap_Dem_Store_30PRods,Scrap_Dem_Store_30MRods,Scrap_Dem_Store_36PRods,
+					Scrap_Dem_Store_36MRods,Scrap_Dem_Store_PLegs,Scrap_Dem_Store_MLegs,
+					Scrap_Dem_Store_Pillow,Scrap_Dem_DogShow_SPFBed,Scrap_Dem_DogShow_SPMBed,
+					Scrap_Dem_DogShow_SFTop,Scrap_Dem_DogShow_Pillow,Scrap_Dem_DogShow_Bag,
+					Scrap_Deliv_unit,Scrap_Pu_unit, Stock_LMMBed,Stock_LPMBed,
+					Stock_MPMBed,Stock_SPMBed,Stock_LMFBed,Stock_LPFBed,Stock_MPFBed,
+					Stock_SPFBed,Stock_LMFrame,Stock_LPFrame,Stock_MPFrame,Stock_SPFrame,
+					Stock_LFTop,Stock_MFTop,Stock_SFTop,Stock_LMTop,Stock_MMTop,Stock_SMTop,
+					Stock_Mesh,Stock_Fleece,Stock_PLegs,Stock_Casing,Stock_36PRods,Stock_30PRods,
+					Stock_24PRods,Stock_18PRods,Stock_Loops,Stock_MLegs,Stock_36MRods,Stock_30MRods,
+					Stock_FScrap,Stock_Pillow,Stock_MScrap,Stock_Bag,Stock_Money,Deliver,Pickup
+					Stock_Dem_Store_LMFBed,Stock_Dem_Store_LPFBed,Stock_Dem_Store_LPMBed,
+				Stock_Dem_Store_LMMBed,Stock_Dem_Store_MPFBed,Stock_Dem_Store_MPMBed,
+				Stock_Dem_Store_SPFBed,Stock_Dem_Store_SPMBed,Stock_Dem_Store_LFTop,
+				Stock_Dem_Store_MFTop,Stock_Dem_Store_SFTop,Stock_Dem_Store_18PRods,
+				Stock_Dem_Store_24PRods,Stock_Dem_Store_30PRods,Stock_Dem_Store_30MRods,
+				Stock_Dem_Store_36PRods,Stock_Dem_Store_36MRods,Stock_Dem_Store_PLegs,
+				Stock_Dem_Store_MLegs,Stock_Dem_Store_Pillow;
+set MATERIAL := 18PRods,24PRods,30MRods,30PRods,36MRods,36PRods,Bag,Casing,Fleece,FScrap,LFTop,
+				LMFBed,LMFrame,LMMBed,LMTop,Loops,LPFBed,LPFrame,LPMBed,Mesh,MFTop,MLegs,MMTop,
+				MPFBed,MPFrame,MPMBed,MScrap,Pillow,PLegs,SFTop,SMTop,SPFBed,SPFrame,SPMBed,Money
+				Dem_Store_LMFBed,Dem_Store_LPFBed,Dem_Store_LPMBed,
+				Dem_Store_LMMBed,Dem_Store_MPFBed,Dem_Store_MPMBed,Dem_Store_SPFBed,
+				Dem_Store_SPMBed,Dem_Store_LFTop,Dem_Store_MFTop,Dem_Store_SFTop,Dem_Store_18PRods,
+				Dem_Store_24PRods,Dem_Store_30PRods,Dem_Store_30MRods,Dem_Store_36PRods,
+				Dem_Store_36MRods,Dem_Store_PLegs,Dem_Store_MLegs,Dem_Store_Pillow,
+				Dem_DogShow_SPFBed,Dem_DogShow_SPMBed,Dem_DogShow_SFTop,Dem_DogShow_Pillow,
+				Dem_DogShow_Bag;
+set CAPACITY := JaneyTime,DougTime,DougTimeOut,Dem_Store_LMFBed,Dem_Store_LPFBed,Dem_Store_LPMBed,
+				Dem_Store_LMMBed,Dem_Store_MPFBed,Dem_Store_MPMBed,Dem_Store_SPFBed,
+				Dem_Store_SPMBed,Dem_Store_LFTop,Dem_Store_MFTop,Dem_Store_SFTop,Dem_Store_18PRods,
+				Dem_Store_24PRods,Dem_Store_30PRods,Dem_Store_30MRods,Dem_Store_36PRods,
+				Dem_Store_36MRods,Dem_Store_PLegs,Dem_Store_MLegs,Dem_Store_Pillow,
+				Dem_DogShow_SPFBed,Dem_DogShow_SPMBed,Dem_DogShow_SFTop,Dem_DogShow_Pillow,
+				Dem_DogShow_Bag,Deliv_unit,Pu_unit;
+
+set TIME := 23-Oct	24-Oct	25-Oct	26-Oct	27-Oct;
+param: BOR: usage :=		
+Scrap_Mesh	Mesh	1
+Scrap_36PRods	36PRods	1
+Scrap_Loops	Loops	1
+Scrap_FScrap	FScrap	1
+Scrap_Fleece	Fleece	1
+Scrap_30PRods	30PRods	1
+Scrap_MLegs	MLegs	1
+Scrap_MScrap	MScrap	1
+Scrap_PLegs	PLegs	1
+Scrap_24PRods	24PRods	1
+Scrap_36MRods	36MRods	1
+Scrap_JaneyTime	JaneyTime	1
+Scrap_Casing	Casing	1
+Scrap_18PRods	18PRods	1
+Scrap_30MRods	30MRods	1
+Scrap_DougTime	DougTime	1
+Scrap_DougTimeOut	DougTimeOut	1
+Scrap_Dem_Store_LMFBed	Dem_Store_LMFBed	1
+Scrap_Dem_Store_LPFBed	Dem_Store_LPFBed	1
+Scrap_Dem_Store_LPMBed	Dem_Store_LPMBed	1
+Scrap_Dem_Store_LMMBed	Dem_Store_LMMBed	1
+Scrap_Dem_Store_MPFBed	Dem_Store_MPFBed	1
+Scrap_Dem_Store_MPMBed	Dem_Store_MPMBed	1
+Scrap_Dem_Store_SPFBed	Dem_Store_SPFBed	1
+Scrap_Dem_Store_SPMBed	Dem_Store_SPMBed	1
+Scrap_Dem_Store_LFTop	Dem_Store_LFTop	1
+Scrap_Dem_Store_MFTop	Dem_Store_MFTop	1
+Scrap_Dem_Store_SFTop	Dem_Store_SFTop	1
+Scrap_Dem_Store_18PRods	Dem_Store_18PRods	1
+Scrap_Dem_Store_24PRods	Dem_Store_24PRods	1
+Scrap_Dem_Store_30PRods	Dem_Store_30PRods	1
+Scrap_Dem_Store_30MRods	Dem_Store_30MRods	1
+Scrap_Dem_Store_36PRods	Dem_Store_36PRods	1
+Scrap_Dem_Store_36MRods	Dem_Store_36MRods	1
+Scrap_Dem_Store_PLegs	Dem_Store_PLegs	1
+Scrap_Dem_Store_MLegs	Dem_Store_MLegs	1
+Scrap_Dem_Store_Pillow	Dem_Store_Pillow	1
+Scrap_Dem_DogShow_SPFBed	Dem_DogShow_SPFBed	1
+Scrap_Dem_DogShow_SPMBed	Dem_DogShow_SPMBed	1
+Scrap_Dem_DogShow_SFTop	Dem_DogShow_SFTop	1
+Scrap_Dem_DogShow_Pillow	Dem_DogShow_Pillow	1
+Scrap_Dem_DogShow_Bag	Dem_DogShow_Bag	1
+Scrap_Deliv_unit	Deliv_unit	1
+Scrap_Pu_unit	Pu_unit	1
+		
+Stock_LMMBed	LMMBed	1
+Stock_LPMBed	LPMBed	1
+Stock_MPMBed	MPMBed	1
+Stock_SPMBed	SPMBed	1
+Stock_LMFBed	LMFBed	1
+Stock_LPFBed	LPFBed	1
+Stock_MPFBed	MPFBed	1
+Stock_SPFBed	SPFBed	1
+Stock_LMFrame	LMFrame	1
+Stock_LPFrame	LPFrame	1
+Stock_MPFrame	MPFrame	1
+Stock_SPFrame	SPFrame	1
+Stock_LFTop	LFTop	1
+Stock_MFTop	MFTop	1
+Stock_SFTop	SFTop	1
+Stock_LMTop	LMTop	1
+Stock_MMTop	MMTop	1
+Stock_SMTop	SMTop	1
+Stock_Mesh	Mesh	1
+Stock_Fleece	Fleece	1
+Stock_PLegs	PLegs	1
+Stock_Casing	Casing	1
+Stock_36PRods	36PRods	1
+Stock_30PRods	30PRods	1
+Stock_24PRods	24PRods	1
+Stock_18PRods	18PRods	1
+Stock_Loops	Loops	1
+Stock_MLegs	MLegs	1
+Stock_36MRods	36MRods	1
+Stock_30MRods	30MRods	1
+Stock_FScrap	FScrap	1
+Stock_Pillow	Pillow	1
+Stock_MScrap	MScrap	1
+Stock_Bag	Bag	1
+Stock_Money	Money	1
+#Stock_Penalty	Penalty	0.001
+Stock_Dem_Store_LMFBed	Dem_Store_LMFBed	1
+Stock_Dem_Store_LPFBed	Dem_Store_LPFBed	1
+Stock_Dem_Store_LPMBed	Dem_Store_LPMBed	1
+Stock_Dem_Store_LMMBed	Dem_Store_LMMBed	1
+Stock_Dem_Store_MPFBed	Dem_Store_MPFBed	1
+Stock_Dem_Store_MPMBed	Dem_Store_MPMBed	1
+Stock_Dem_Store_SPFBed	Dem_Store_SPFBed	1
+Stock_Dem_Store_SPMBed	Dem_Store_SPMBed	1
+Stock_Dem_Store_LFTop	Dem_Store_LFTop	1
+Stock_Dem_Store_MFTop	Dem_Store_MFTop	1
+Stock_Dem_Store_SFTop	Dem_Store_SFTop	1
+Stock_Dem_Store_18PRods	Dem_Store_18PRods	1
+Stock_Dem_Store_24PRods	Dem_Store_24PRods	1
+Stock_Dem_Store_30PRods	Dem_Store_30PRods	1
+Stock_Dem_Store_30MRods	Dem_Store_30MRods	1
+Stock_Dem_Store_36PRods	Dem_Store_36PRods	1
+Stock_Dem_Store_36MRods	Dem_Store_36MRods	1
+Stock_Dem_Store_PLegs	Dem_Store_PLegs	1
+Stock_Dem_Store_MLegs	Dem_Store_MLegs	1
+Stock_Dem_Store_Pillow	Dem_Store_Pillow	1
+		
+Make_LMMBed	LMTop	1
+Make_LMMBed	LMFrame	1
+Make_LMMBed	DougTime	15
+Make_LPMBed	LMTop	1
+Make_LPMBed	LPFrame	1
+Make_LPMBed	DougTime	12
+Make_LMFBed	LFTop	1
+Make_LMFBed	DougTime	15
+Make_LMFBed	LMFrame	1
+Make_LPFBed	LFTop	1
+Make_LPFBed	DougTime	12
+Make_LPFBed	LPFrame	1
+Make_MPFBed	MFTop	1
+Make_MPFBed	MPFrame	1
+Make_MPFBed	DougTime	8
+Make_MPMBed	MMTop	1
+Make_MPMBed	DougTime	8
+Make_MPMBed	MPFrame	1
+Make_SPMBed	SMTop	1
+Make_SPMBed	SPFrame	1
+Make_SPMBed	DougTime	5
+Make_SPFBed	SFTop	1
+Make_SPFBed	DougTime	5
+Make_SPFBed	SPFrame	1
+Make_LMTop	Mesh	36
+Make_LMTop	Casing	132
+Make_LMTop	DougTime	12
+Make_MMTop	Mesh	24
+Make_MMTop	Casing	108
+Make_MMTop	DougTime	8
+Make_SMTop	Mesh	18
+Make_SMTop	Casing	84
+Make_SMTop	DougTime	4
+Make_LFTop	Fleece	36
+Make_LFTop	Casing	132
+Make_LFTop	DougTime	25
+Make_MFTop	Fleece	24
+Make_MFTop	Casing	108
+Make_MFTop	DougTime	20
+Make_SFTop	Fleece	18
+Make_SFTop	Casing	84
+Make_SFTop	DougTime	15
+Make_MPFrame	PLegs	4
+Make_MPFrame	24PRods	2
+Make_MPFrame	30PRods	2
+Make_SPFrame	PLegs	4
+Make_SPFrame	24PRods	2
+Make_SPFrame	18PRods	2
+Make_LPFrame	PLegs	4
+Make_LPFrame	36PRods	2
+Make_LPFrame	30PRods	2
+Make_LMFrame	MLegs	4
+Make_LMFrame	36MRods	2
+Make_LMFrame	30MRods	2
+Make_Pillow	FScrap	1
+Make_Pillow	DougTime	3
+Make_Bag	MScrap	1
+Make_Bag	Loops	2
+Make_Bag	DougTime	3
+Make_MMTop_LJ	Loops	22
+Make_MMTop_LJ	Mesh	24
+Make_MMTop_LJ	JaneyTime	10
+Make_LMTop_LJ	Loops	26
+Make_LMTop_LJ	Mesh	36
+Make_LMTop_LJ	JaneyTime	15
+Make_SMTop_LJ	Loops	18
+Make_SMTop_LJ	Mesh	18
+Make_SMTop_LJ	JaneyTime	5
+Make_MMTop_CJ	Casing	108
+Make_MMTop_CJ	Mesh	24
+Make_MMTop_CJ	JaneyTime	10
+Make_LMTop_CJ	Casing	132
+Make_LMTop_CJ	Mesh	36
+Make_LMTop_CJ	JaneyTime	15
+Make_SMTop_CJ	Casing	84
+Make_SMTop_CJ	Mesh	18
+Make_SMTop_CJ	JaneyTime	5
+Make_MMTop_LD	Loops	22
+Make_MMTop_LD	Mesh	24
+Make_MMTop_LD	DougTime	8
+Make_LMTop_LD	Loops	26
+Make_LMTop_LD	Mesh	36
+Make_LMTop_LD	DougTime	12
+Make_SMTop_LD	Loops	18
+Make_SMTop_LD	Mesh	18
+Make_SMTop_LD	DougTime	4
+Make_Pillow_J	FScrap	1
+Make_Pillow_J	JaneyTime	3
+Make_Bag_J	MScrap	1
+Make_Bag_J	Loops	2
+Make_Bag_J	JaneyTime	3
+Make_MFTop_J	Casing	108
+Make_MFTop_J	Fleece	36
+Make_MFTop_J	JaneyTime	15
+Make_LFTop_J	Casing	132
+Make_LFTop_J	Fleece	24
+Make_LFTop_J	JaneyTime	20
+Make_SFTop_J	Casing	84
+Make_SFTop_J	Fleece	18
+Make_SFTop_J	JaneyTime	10
+		
+Buy_18PRods	Money	30
+Buy_24PRods	Money	36
+Buy_30PRods	Money	42
+Buy_30MRods	Money	40
+Buy_36PRods	Money	48
+Buy_36MRods	Money	50
+Buy_PLegs	Money	100
+Buy_MLegs	Money	40
+Buy_Fleece	Money	640
+Buy_Mesh	Money	200
+Buy_Casing	Money	100
+Buy_Loops	Money	40
+Buy_JaneyTime	Money	20
+Buy_18PRods	Pu_unit	1
+Buy_24PRods	Pu_unit	1
+Buy_30PRods	Pu_unit	1
+Buy_30MRods	Pu_unit	1
+Buy_36PRods	Pu_unit	1
+Buy_36MRods	Pu_unit	1
+Buy_PLegs	Pu_unit	1
+Buy_MLegs	Pu_unit	1
+Buy_Fleece	Pu_unit	1
+Buy_Mesh	Pu_unit	1
+Buy_Casing	Pu_unit	1
+Buy_Loops	Pu_unit	1
+		
+Ship_Store_LMFBed	LMFBed	1
+Ship_Store_LPFBed	LPFBed	1
+Ship_Store_LPMBed	LPMBed	1
+Ship_Store_LMMBed	LMMBed	1
+Ship_Store_MPFBed	MPFBed	1
+Ship_Store_MPMBed	MPMBed	1
+Ship_Store_SPFBed	SPFBed	1
+Ship_Store_SPMBed	SPMBed	1
+Ship_Store_LFTop	LFTop	1
+Ship_Store_MFTop	MFTop	1
+Ship_Store_SFTop	SFTop	1
+Ship_Store_18PRods	18PRods	1
+Ship_Store_24PRods	24PRods	1
+Ship_Store_30PRods	30PRods	1
+Ship_Store_30MRods	30MRods	1
+Ship_Store_36PRods	36PRods	1
+Ship_Store_36MRods	36MRods	1
+Ship_Store_PLegs	PLegs	1
+Ship_Store_MLegs	MLegs	1
+Ship_Store_Pillow	Pillow	1
+Ship_Store_LMFBed	Dem_Store_LMFBed	1
+Ship_Store_LPFBed	Dem_Store_LPFBed	1
+Ship_Store_LPMBed	Dem_Store_LPMBed	1
+Ship_Store_LMMBed	Dem_Store_LMMBed	1
+Ship_Store_MPFBed	Dem_Store_MPFBed	1
+Ship_Store_MPMBed	Dem_Store_MPMBed	1
+Ship_Store_SPFBed	Dem_Store_SPFBed	1
+Ship_Store_SPMBed	Dem_Store_SPMBed	1
+Ship_Store_LFTop	Dem_Store_LFTop	1
+Ship_Store_MFTop	Dem_Store_MFTop	1
+Ship_Store_SFTop	Dem_Store_SFTop	1
+Ship_Store_18PRods	Dem_Store_18PRods	1
+Ship_Store_24PRods	Dem_Store_24PRods	1
+Ship_Store_30PRods	Dem_Store_30PRods	1
+Ship_Store_30MRods	Dem_Store_30MRods	1
+Ship_Store_36PRods	Dem_Store_36PRods	1
+Ship_Store_36MRods	Dem_Store_36MRods	1
+Ship_Store_PLegs	Dem_Store_PLegs	1
+Ship_Store_MLegs	Dem_Store_MLegs	1
+Ship_Store_Pillow	Dem_Store_Pillow	1
+Ship_Store_LMFBed	Deliv_unit	1
+Ship_Store_LPFBed	Deliv_unit	1
+Ship_Store_LPMBed	Deliv_unit	1
+Ship_Store_LMMBed	Deliv_unit	1
+Ship_Store_MPFBed	Deliv_unit	1
+Ship_Store_MPMBed	Deliv_unit	1
+Ship_Store_SPFBed	Deliv_unit	1
+Ship_Store_SPMBed	Deliv_unit	1
+Ship_Store_LFTop	Deliv_unit	1
+Ship_Store_MFTop	Deliv_unit	1
+Ship_Store_SFTop	Deliv_unit	1
+Ship_Store_18PRods	Deliv_unit	1
+Ship_Store_24PRods	Deliv_unit	1
+Ship_Store_30PRods	Deliv_unit	1
+Ship_Store_30MRods	Deliv_unit	1
+Ship_Store_36PRods	Deliv_unit	1
+Ship_Store_36MRods	Deliv_unit	1
+Ship_Store_PLegs	Deliv_unit	1
+Ship_Store_MLegs	Deliv_unit	1
+Ship_Store_Pillow	Deliv_unit	1
+		
+Ship_DogShow_SPFBed	SPFBed	1
+Ship_DogShow_SPMBed	SPMBed	1
+Ship_DogShow_SFTop	SFTop	1
+Ship_DogShow_Pillow	Pillow	1
+Ship_DogShow_Bag	Bag	1
+Ship_DogShow_SPFBed	Dem_DogShow_SPFBed	1
+Ship_DogShow_SPMBed	Dem_DogShow_SPMBed	1
+Ship_DogShow_SFTop	Dem_DogShow_SFTop	1
+Ship_DogShow_Pillow	Dem_DogShow_Pillow	1
+Ship_DogShow_Bag	Dem_DogShow_Bag	1
+		
+Deliver	DougTimeOut	120
+Pickup	DougTimeOut	120;
+param: BOP: produce :=		
+Stock_LMMBed	LMMBed	1
+Stock_LPMBed	LPMBed	1
+Stock_MPMBed	MPMBed	1
+Stock_SPMBed	SPMBed	1
+Stock_LMFBed	LMFBed	1
+Stock_LPFBed	LPFBed	1
+Stock_MPFBed	MPFBed	1
+Stock_SPFBed	SPFBed	1
+Stock_LMFrame	LMFrame	1
+Stock_LPFrame	LPFrame	1
+Stock_MPFrame	MPFrame	1
+Stock_SPFrame	SPFrame	1
+Stock_LFTop	LFTop	1
+Stock_MFTop	MFTop	1
+Stock_SFTop	SFTop	1
+Stock_LMTop	LMTop	1
+Stock_MMTop	MMTop	1
+Stock_SMTop	SMTop	1
+Stock_Mesh	Mesh	1
+Stock_Fleece	Fleece	1
+Stock_PLegs	PLegs	1
+Stock_Casing	Casing	1
+Stock_36PRods	36PRods	1
+Stock_30PRods	30PRods	1
+Stock_24PRods	24PRods	1
+Stock_18PRods	18PRods	1
+Stock_Loops	Loops	1
+Stock_MLegs	MLegs	1
+Stock_36MRods	36MRods	1
+Stock_30MRods	30MRods	1
+Stock_FScrap	FScrap	1
+Stock_Pillow	Pillow	1
+Stock_MScrap	MScrap	1
+Stock_Bag	Bag	1
+Stock_Money	Money	1
+#Stock_Penalty	Penalty	0.001
+Stock_Dem_Store_LMFBed	Dem_Store_LMFBed	1
+Stock_Dem_Store_LPFBed	Dem_Store_LPFBed	1
+Stock_Dem_Store_LPMBed	Dem_Store_LPMBed	1
+Stock_Dem_Store_LMMBed	Dem_Store_LMMBed	1
+Stock_Dem_Store_MPFBed	Dem_Store_MPFBed	1
+Stock_Dem_Store_MPMBed	Dem_Store_MPMBed	1
+Stock_Dem_Store_SPFBed	Dem_Store_SPFBed	1
+Stock_Dem_Store_SPMBed	Dem_Store_SPMBed	1
+Stock_Dem_Store_LFTop	Dem_Store_LFTop	1
+Stock_Dem_Store_MFTop	Dem_Store_MFTop	1
+Stock_Dem_Store_SFTop	Dem_Store_SFTop	1
+Stock_Dem_Store_18PRods	Dem_Store_18PRods	1
+Stock_Dem_Store_24PRods	Dem_Store_24PRods	1
+Stock_Dem_Store_30PRods	Dem_Store_30PRods	1
+Stock_Dem_Store_30MRods	Dem_Store_30MRods	1
+Stock_Dem_Store_36PRods	Dem_Store_36PRods	1
+Stock_Dem_Store_36MRods	Dem_Store_36MRods	1
+Stock_Dem_Store_PLegs	Dem_Store_PLegs	1
+Stock_Dem_Store_MLegs	Dem_Store_MLegs	1
+Stock_Dem_Store_Pillow	Dem_Store_Pillow	1
+		
+Make_LMMBed	LMMBed	1
+Make_LPMBed	LPMBed	1
+Make_LMFBed	LMFBed	1
+Make_LPFBed	LPFBed	1
+Make_MPFBed	MPFBed	1
+Make_MPMBed	MPMBed	1
+Make_SPMBed	SPMBed	1
+Make_SPFBed	SPFBed	1
+Make_LMTop	LMTop	1
+Make_MMTop	MMTop	1
+Make_SMTop	SMTop	1
+Make_LFTop	LFTop	1
+Make_MFTop	MFTop	1
+Make_SFTop	SFTop	1
+Make_MPFrame	MPFrame	1
+Make_SPFrame	SPFrame	1
+Make_LPFrame	LPFrame	1
+Make_LMFrame	LMFrame	1
+Make_Pillow	Pillow	1
+Make_Bag	Bag	1
+Make_SFTop	FScrap	1
+Make_SMTop	MScrap	1
+Make_MMTop_LJ	MMTop	1
+Make_LMTop_LJ	LMTop	1
+Make_SMTop_LJ	SMTop	1
+Make_MMTop_CJ	MMTop	1
+Make_LMTop_CJ	LMTop	1
+Make_SMTop_CJ	SMTop	1
+Make_MMTop_LD	MMTop	1
+Make_LMTop_LD	LMTop	1
+Make_SMTop_LD	SMTop	1
+Make_Pillow_J	Pillow	1
+Make_Bag_J	Bag	1
+Make_MFTop_J	MFTop	1
+Make_LFTop_J	LFTop	1
+Make_SFTop_J	SFTop	1
+Make_SFTop_J	FScrap	1
+Make_SMTop_CJ	MScrap	1
+Make_SMTop_LD	MScrap	1
+Make_SMTop_LJ	MScrap	1
+		
+Buy_18PRods	18PRods	25
+Buy_24PRods	24PRods	25
+Buy_30PRods	30PRods	25
+Buy_30MRods	30MRods	5
+Buy_36PRods	36PRods	25
+Buy_36MRods	36MRods	5
+Buy_PLegs	PLegs	100
+Buy_MLegs	MLegs	40
+Buy_Fleece	Fleece	1440
+Buy_Mesh	Mesh	3600
+Buy_Casing	Casing	1800
+Buy_Loops	Loops	60
+Buy_JaneyTime	JaneyTime	60
+		
+Ship_Store_LMFBed	Money	100
+Ship_Store_LPFBed	Money	60
+Ship_Store_LPMBed	Money	50
+Ship_Store_LMMBed	Money	80
+Ship_Store_MPFBed	Money	50
+Ship_Store_MPMBed	Money	30
+Ship_Store_SPFBed	Money	30
+Ship_Store_SPMBed	Money	20
+Ship_Store_LFTop	Money	30
+Ship_Store_MFTop	Money	25
+Ship_Store_SFTop	Money	15
+Ship_Store_18PRods	Money	3
+Ship_Store_24PRods	Money	4
+Ship_Store_30PRods	Money	5
+Ship_Store_30MRods	Money	8
+Ship_Store_36PRods	Money	6
+Ship_Store_36MRods	Money	12
+Ship_Store_PLegs	Money	3
+Ship_Store_MLegs	Money	5
+Ship_Store_Pillow	Money	10
+		
+Ship_DogShow_SPFBed	Money	65
+Ship_DogShow_SPMBed	Money	45
+Ship_DogShow_SFTop	Money	40
+Ship_DogShow_Pillow	Money	15
+Ship_DogShow_Bag	Money	10
+		
+Deliver	Deliv_unit	1000
+Pickup	Pu_unit	1000
+
+;
+
+param: offset :=		
+Stock_LMMBed	LMMBed	1
+Stock_LPMBed	LPMBed	1
+Stock_MPMBed	MPMBed	1
+Stock_SPMBed	SPMBed	1
+Stock_LMFBed	LMFBed	1
+Stock_LPFBed	LPFBed	1
+Stock_MPFBed	MPFBed	1
+Stock_SPFBed	SPFBed	1
+Stock_LMFrame	LMFrame	1
+Stock_LPFrame	LPFrame	1
+Stock_MPFrame	MPFrame	1
+Stock_SPFrame	SPFrame	1
+Stock_LFTop	LFTop	1
+Stock_MFTop	MFTop	1
+Stock_SFTop	SFTop	1
+Stock_LMTop	LMTop	1
+Stock_MMTop	MMTop	1
+Stock_SMTop	SMTop	1
+Stock_Mesh	Mesh	1
+Stock_Fleece	Fleece	1
+Stock_PLegs	PLegs	1
+Stock_Casing	Casing	1
+Stock_36PRods	36PRods	1
+Stock_30PRods	30PRods	1
+Stock_24PRods	24PRods	1
+Stock_18PRods	18PRods	1
+Stock_Loops	Loops	1
+Stock_MLegs	MLegs	1
+Stock_36MRods	36MRods	1
+Stock_30MRods	30MRods	1
+Stock_FScrap	FScrap	1
+Stock_Pillow	Pillow	1
+Stock_MScrap	MScrap	1
+Stock_Bag	Bag	1
+Stock_Money	Money	1
+#Stock_Penalty	Penalty	1
+Stock_Dem_Store_LMFBed	Dem_Store_LMFBed	1
+Stock_Dem_Store_LPFBed	Dem_Store_LPFBed	1
+Stock_Dem_Store_LPMBed	Dem_Store_LPMBed	1
+Stock_Dem_Store_LMMBed	Dem_Store_LMMBed	1
+Stock_Dem_Store_MPFBed	Dem_Store_MPFBed	1
+Stock_Dem_Store_MPMBed	Dem_Store_MPMBed	1
+Stock_Dem_Store_SPFBed	Dem_Store_SPFBed	1
+Stock_Dem_Store_SPMBed	Dem_Store_SPMBed	1
+Stock_Dem_Store_LFTop	Dem_Store_LFTop	1
+Stock_Dem_Store_MFTop	Dem_Store_MFTop	1
+Stock_Dem_Store_SFTop	Dem_Store_SFTop	1
+Stock_Dem_Store_18PRods	Dem_Store_18PRods	1
+Stock_Dem_Store_24PRods	Dem_Store_24PRods	1
+Stock_Dem_Store_30PRods	Dem_Store_30PRods	1
+Stock_Dem_Store_30MRods	Dem_Store_30MRods	1
+Stock_Dem_Store_36PRods	Dem_Store_36PRods	1
+Stock_Dem_Store_36MRods	Dem_Store_36MRods	1
+Stock_Dem_Store_PLegs	Dem_Store_PLegs	1
+Stock_Dem_Store_MLegs	Dem_Store_MLegs	1
+Stock_Dem_Store_Pillow	Dem_Store_Pillow	1
+		
+Ship_Store_LMFBed	Money	1
+Ship_Store_LPFBed	Money	1
+Ship_Store_LPMBed	Money	1
+Ship_Store_LMMBed	Money	1
+Ship_Store_MPFBed	Money	1
+Ship_Store_MPMBed	Money	1
+Ship_Store_SPFBed	Money	1
+Ship_Store_SPMBed	Money	1
+Ship_Store_LFTop	Money	1
+Ship_Store_MFTop	Money	1
+Ship_Store_SFTop	Money	1
+Ship_Store_18PRods	Money	1
+Ship_Store_24PRods	Money	1
+Ship_Store_30PRods	Money	1
+Ship_Store_30MRods	Money	1
+Ship_Store_36PRods	Money	1
+Ship_Store_36MRods	Money	1
+Ship_Store_PLegs	Money	1
+Ship_Store_MLegs	Money	1
+Ship_Store_Pillow	Money	1
+		
+Ship_DogShow_SPFBed	Money	3
+Ship_DogShow_SPMBed	Money	3
+Ship_DogShow_SFTop	Money	3
+Ship_DogShow_Pillow	Money	3
+Ship_DogShow_Bag	Money	3;
+
+param p_disc:= .02;
+
+param supply : 23-Oct	24-Oct	25-Oct	26-Oct	27-Oct :=	
+18PRods	10	0	0	0	0
+24PRods	12	0	0	0	0
+30PRods	7	0	0	0	0
+30MRods	6	0	0	0	0
+36PRods	8	0	0	0	0
+36MRods	12	0	0	0	0
+PLegs	60	0	0	0	0
+MLegs	32	0	0	0	0
+Fleece	2880	0	0	0	0
+Mesh	1440	0	0	0	0
+Casing	7200	0	0	0	0
+DougTime	480	480	480	480	360
+					
+DougTimeOut	120	120	120	120	240
+Money	2000	0	0	0	0
+
+Dem_Store_LMFBed	4	4	4	4	4
+Dem_Store_LPFBed	5	5	5	5	5
+Dem_Store_LPMBed	6	6	6	6	6
+Dem_Store_LMMBed	1	2	3	4	5
+Dem_Store_MPFBed	6	7	8	9	10
+Dem_Store_MPMBed	6	7	8	9	10
+Dem_Store_SPFBed	6	7	8	9	10
+Dem_Store_SPMBed	5	6	7	8	9
+Dem_Store_LFTop	10	0	0	0	10
+Dem_Store_MFTop	5	0	0	0	5
+Dem_Store_SFTop	8	0	0	0	8
+Dem_Store_18PRods	2	0	0	0	0
+Dem_Store_24PRods	4	0	0	0	0
+Dem_Store_30PRods	6	0	0	0	0
+Dem_Store_30MRods	8	0	0	0	0
+Dem_Store_36PRods	10	0	0	0	0
+Dem_Store_36MRods	5	0	0	0	0
+Dem_Store_PLegs	5	0	0	0	0
+Dem_Store_MLegs	10	0	0	0	0
+Dem_Store_Pillow	12	14	15	15	15
+					
+Dem_DogShow_SPFBed	0	0	0	0	10
+Dem_DogShow_SPMBed	0	0	0	0	15
+Dem_DogShow_SFTop	0	0	0	0	5
+Dem_DogShow_Pillow	0	0	0	0	20
+Dem_DogShow_Bag	0	0	0	0	30;
+param min_buy:=
+Buy_30MRods		2
+Buy_36MRods		2
+Buy_Loops       2
+Buy_JaneyTime   4;
+param max_op :=
+Buy_JaneyTime, 23-Oct 8
+Buy_JaneyTime, 24-Oct 8
+Buy_JaneyTime, 25-Oct 0
+Buy_JaneyTime, 26-Oct 8
+Buy_JaneyTime, 27-Oct 8
+;
+

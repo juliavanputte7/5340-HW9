@@ -1,0 +1,7 @@
+reset;
+model HW9.mod;
+data Tiny.dat;
+solve;
+display Amt_Ops;
+display Prft;
+

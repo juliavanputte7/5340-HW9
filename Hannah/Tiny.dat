@@ -1,0 +1,121 @@
+
+data;     		
+set MAKE_OPS := Make_P1 Make_P1_R2 Make_P1_J;
+set SHIP_OPS := Ship_K1_P1 Ship_K2_P1;
+set BUY_OPS := Buy_R1 Buy_JaneyTime;
+#set BACKLOG_OPS := Backlog_K1_P1;
+set OTHER_OPS := Stock_P1 Stock_R1 Stock_Money Scrap_R1 Stock_R2 Scrap_R2
+					Scrap_C1 Scrap_Dem_K1_P1 Scrap_Dem_K2_P1 Scrap_DougTimeOut
+					Scrap_Pu_unit Scrap_Deliv_unit Deliver Scrap_JaneyTime 
+					Pickup Scrap_MoveMPass Scrap_MovePPass MoveMaterial MoveProduct
+					Move_R1 Move_R2 Move_P1J Stock_Dem_K1_P1 Stock_R1J Stock_R2J Stock_P1J;
+
+set MATERIAL := R1 R2 P1 Money Dem_K1_P1 Dem_K2_P1 P1J R1J R2J;    # set of materials
+set CAPACITY := C1 Dem_K2_P1 DougTimeOut 
+			Deliv_unit Pu_unit MoveMPass MovePPass JaneyTime;					#set of capacities
+;	
+set TIME := day1 day2;
+param: BOR: usage :=  	# usage data given as list of Prod, resource qty						# BOM is defined through this list
+Make_P1 R1 1
+Make_P1 C1 10
+Make_P1_R2, R2 1
+Make_P1_R2, C1 10
+Make_P1_J R1J 1
+Make_P1_J JaneyTime 10
+Ship_K1_P1 P1 1
+Ship_K1_P1 Dem_K1_P1 1
+Ship_K1_P1	Deliv_unit	1
+Ship_K2_P1 P1 1
+Ship_K2_P1 Dem_K2_P1 1
+Ship_K2_P1	Deliv_unit	1
+Buy_R1 Money 2
+Buy_R1	Pu_unit	1
+Buy_JaneyTime Money	20
+#Backlog_K1_P1, Dem_K1_P1 1
+Stock_P1 P1 1
+Stock_R1 R1 1
+Stock_R2, R2 1
+Stock_R1J, R1J 1
+Stock_R2J, R2J 1
+Stock_Money Money 1
+Scrap_C1 C1 1
+Scrap_Dem_K1_P1 Dem_K1_P1 1
+Scrap_Dem_K2_P1 Dem_K2_P1 1
+Scrap_JaneyTime	JaneyTime	1
+Scrap_DougTimeOut	DougTimeOut	1
+Scrap_Pu_unit	Pu_unit	1
+Scrap_Deliv_unit	Deliv_unit	1
+Stock_Dem_K1_P1	Dem_K1_P1	1
+
+Move_R1	R1	1
+#Move_R2	R2	1
+Move_R1	MoveMPass	1
+Move_R2	MoveMPass	1
+
+Move_P1J	P1J	1
+Move_P1J	MovePPass	1
+
+Scrap_MoveMPass	MoveMPass	1
+Scrap_MovePPass	MovePPass	1
+
+MoveMaterial	Money	5
+MoveProduct	Money	10
+
+Deliver	DougTimeOut	120
+Pickup	DougTimeOut	120
+;
+param: BOP: produce :=
+Make_P1, P1 1
+Make_P1_R2, P1 1
+Make_P1_J, P1J 1
+Ship_K1_P1, Money 10
+Ship_K2_P1, Money 20
+Buy_R1, R1 1
+#Backlog_K1_P1, Dem_K1_P1 1
+Stock_P1, P1 1
+Stock_R1, R1 1
+Stock_R2, R2 1
+Stock_R1J, R1J 1
+Stock_R2J, R2J 1
+Stock_P1J, P1J	1
+Stock_Money, Money 1
+Stock_Dem_K1_P1 Dem_K1_P1 1
+Buy_JaneyTime	JaneyTime	60
+MoveMaterial	MoveMPass	500
+MoveProduct	MovePPass	500
+
+Move_R1	R1J	1
+Move_R2	R2J	1
+Move_P1J P1	1
+
+Deliver	Deliv_unit	500
+Pickup	Pu_unit	500
+;	
+	
+param: offset :=
+Ship_K1_P1 Money 1
+Ship_K2_P1 Money 1
+#Backlog_K1_P1, Dem_K1_P1 1
+Stock_P1 P1 1
+Stock_R1 R1 1
+Stock_R2 R2 1
+Stock_Money Money 1
+Stock_Dem_K1_P1 Dem_K1_P1 1
+Stock_R1J, R1J 1
+Stock_R2J, R2J 1
+Stock_P1J	P1J	1
+Move_P1J P1 1
+
+;
+param p_disc:= .02;
+
+param supply: day1 day2 :=	
+R1				10	5
+R2				5	5
+C1				60	60
+Money           500 0
+Dem_K1_P1       100  100
+Dem_K2_P1       200  100
+
+DougTimeOut	120	120	
+;
