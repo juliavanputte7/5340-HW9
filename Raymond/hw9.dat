@@ -1,0 +1,604 @@
+data;
+set MATERIAL:= LargeMMeshBed LargePMeshBed MediumPMeshBed SmallPMeshBed
+LargeMFleeceBed LargePFleeceBed MediumPFleeceBed SmallPFleeceBed  SQuiltBed
+LMFrame LPFrame MPFrame SPFrame
+LFleeceTop_J MFleeceTop_J SFleeceTop_J LMeshTop_J MMeshTop_J SMeshTop_J SQuiltTop# set of products
+LFleeceTop MFleeceTop SFleeceTop LMeshTop MMeshTop SMeshTop
+Mesh_J Fleece_J PLegs Casing_J 36PRods 30PRods 24PRods 18PRods
+Mesh Fleece Casing Loops FleeceScrap MeshScrap
+Loops_J MLegs 36MRods 30MRods FleeceScrap_J Pillow MeshScrap_J Money Pillow_J Bag_J Bag
+LBundle MBundle SBundle SpoiledBundle
+LBox SBox
+;
+set CAPACITY:=  JaneyTime DougTime Deliver Pickup SewTime SergerTime MTransport PTransport;
+set TIME :=  Mon Tue Wed Thu Fri Sat;
+set SHIP_Nolate_OPS := Ship_SmallPFleeceBed_to_DogShow Ship_SmallPMeshBed_to_DogShow
+Ship_SFleeceTop_to_DogShow  Ship_Pillow_to_DogShow
+Ship_SQuiltBed_to_DogShow Ship_SpoiledBundle_to_DogShow  Ship_SQuiltTop_to_DogShow
+Ship_Bag_to_DogShow
+;
+set SHIP_Late_OPS := Ship_LargeMMeshBed_to_Store Ship_LargePMeshBed_to_Store
+Ship_MediumPMeshBed_to_Store Ship_SmallPMeshBed_to_Store Ship_LargeMFleeceBed_to_Store
+Ship_LargePFleeceBed_to_Store Ship_MediumPFleeceBed_to_Store Ship_SmallPFleeceBed_to_Store
+Ship_LFleeceTop_to_Store Ship_MFleeceTop_to_Store Ship_SFleeceTop_to_Store
+Ship_PLegs_to_Store Ship_36PRods_to_Store Ship_30PRods_to_Store Ship_24PRods_to_Store
+Ship_18PRods_to_Store Ship_MLegs_to_Store Ship_36MRods_to_Store Ship_30MRods_to_Store
+Ship_Pillow_to_Store
+Ship_LargePMeshBed_to_Online  Ship_LargePFleeceBed_to_Online Ship_MediumPFleeceBed_to_Online
+Ship_MediumPMeshBed_to_Online Ship_SmallPMeshBed_to_Online Ship_SmallPFleeceBed_to_Online
+Ship_LFleeceTop_to_Online Ship_MFleeceTop_to_Online Ship_SFleeceTop_to_Online
+Ship_Pillow_to_Online Ship_LBundle_to_Online Ship_MBundle_to_Online Ship_SBundle_to_Online
+;
+set OTHER_OPS := Buy_18PRods Buy_24PRods Buy_30PRods Buy_30MRods Buy_36PRods
+Buy_36MRods Buy_PLegs Buy_MLegs Buy_Fleece
+Buy_Mesh Buy_Casing Buy_JaneyTime Buy_Loops
+Buy_FabricBundle Buy_MetalBundle
+Buy_LBox Buy_SBox
+Buy_SQuiltTop
+MAKE_LargeMMeshBed,MAKE_LargePMeshBed,MAKE_LargeMFleeceBed,
+MAKE_LargePFleeceBed,MAKE_MediumPFleeceBed,MAKE_MediumPMeshBed,
+MAKE_SmallPMeshBed,MAKE_SmallPFleeceBed,
+MAKE_LMeshTop_C_J,MAKE_LMeshTop_C_D, MAKE_LMeshTop_L_J, MAKE_LMeshTop_L_D ,
+MAKE_MMeshTop_C_J,MAKE_MMeshTop_C_D, MAKE_MMeshTop_L_D, MAKE_MMeshTop_L_J,
+MAKE_SMeshTop_C_J,MAKE_SMeshTop_C_D, MAKE_SMeshTop_L_J, MAKE_SMeshTop_L_D,
+MAKE_LFleeceTop_C_J,MAKE_LFleeceTop_C_D,
+MAKE_MFleeceTop_C_J,MAKE_MFleeceTop_C_D,
+MAKE_SFleeceTop_C_J, MAKE_SFleeceTop_C_D, MAKE_MPFrame,
+MAKE_SPFrame,MAKE_LPFrame,MAKE_LMFrame,MAKE_Bag_D, MAKE_Bag_J,MAKE_Pillow_J, MAKE_Pillow_D,
+MAKE_SQuiltBed,
+MAKE_LBundle,
+MAKE_MBundle,
+MAKE_SBundle,
+MAKE_SpoiledBundle,
+Transport_D_J, Transport_J_D,
+Transport_Fleece_D_J, Transport_FleeceScrap_D_J, Transport_Casing_D_J, Transport_Loops_D_J,
+Transport_Mesh_D_J, Transport_MeshScrap_D_J,
+Transport_LFleeceTop_J_D, Transport_MFleeceTop_J_D, Transport_SFleeceTop_J_D, Transport_Bag_J_D,
+Transport_LMeshTop_J_D, Transport_MMeshTop_J_D, Transport_SMeshTop_J_D, Transport_Pillow_J_D
+;
+set DEMAND := LargeMFleeceBed_to_Store  LargePFleeceBed_to_Store  LargePMeshBed_to_Store
+LargeMMeshBed_to_Store  MediumPFleeceBed_to_Store MediumPMeshBed_to_Store  SmallPFleeceBed_to_Store
+SmallPMeshBed_to_Store LFleeceTop_to_Store  MFleeceTop_to_Store  SFleeceTop_to_Store
+18PRods_to_Store  24PRods_to_Store  30PRods_to_Store  30MRods_to_Store  36PRods_to_Store
+36MRods_to_Store PLegs_to_Store  MLegs_to_Store  Pillow_to_Store
+SmallPFleeceBed_to_DogShow  SmallPMeshBed_to_DogShow  SFleeceTop_to_DogShow  Pillow_to_DogShow
+SQuiltBed_to_DogShow
+SpoiledBundle_to_DogShow
+SQuiltTop_to_DogShow
+Bag_to_Dogshow
+LargePFleeceBed_to_Online
+LargePMeshBed_to_Online
+MediumPFleeceBed_to_Online
+MediumPMeshBed_to_Online
+SmallPFleeceBed_to_Online
+SmallPMeshBed_to_Online
+LFleeceTop_to_Online
+MFleeceTop_to_Online
+SFleeceTop_to_Online
+Pillow_to_Online
+LBundle_to_Online
+MBundle_to_Online
+SBundle_to_Online
+;
+param: BOR :usage :=
+Ship_LargeMMeshBed_to_Store  LargeMMeshBed  1
+Ship_LargeMMeshBed_to_Store  Deliver  1
+Ship_LargePMeshBed_to_Store  LargePMeshBed 1
+Ship_LargePMeshBed_to_Store  Deliver 1
+Ship_MediumPMeshBed_to_Store  MediumPMeshBed 1
+Ship_MediumPMeshBed_to_Store  Deliver 1
+Ship_SmallPMeshBed_to_Store  SmallPMeshBed 1
+Ship_SmallPMeshBed_to_Store  Deliver 1
+Ship_LargeMFleeceBed_to_Store  LargeMFleeceBed  1
+Ship_LargeMFleeceBed_to_Store  Deliver  1
+Ship_LargePFleeceBed_to_Store  LargePFleeceBed  1
+Ship_LargePFleeceBed_to_Store  Deliver  1
+Ship_MediumPFleeceBed_to_Store MediumPFleeceBed 1
+Ship_MediumPFleeceBed_to_Store Deliver 1
+Ship_SmallPFleeceBed_to_Store  SmallPFleeceBed  1
+Ship_SmallPFleeceBed_to_Store  Deliver  1
+Ship_LFleeceTop_to_Store  LFleeceTop  1
+Ship_LFleeceTop_to_Store  Deliver  1
+Ship_MFleeceTop_to_Store  MFleeceTop  1
+Ship_MFleeceTop_to_Store  Deliver  1
+Ship_SFleeceTop_to_Store  SFleeceTop  1
+Ship_SFleeceTop_to_Store  Deliver  1
+Ship_PLegs_to_Store  PLegs  1
+Ship_PLegs_to_Store  Deliver  1
+Ship_36PRods_to_Store  36PRods  1
+Ship_36PRods_to_Store  Deliver  1
+Ship_30PRods_to_Store  30PRods  1
+Ship_30PRods_to_Store  Deliver  1
+Ship_24PRods_to_Store  24PRods  1
+Ship_24PRods_to_Store  Deliver  1
+Ship_18PRods_to_Store  18PRods  1
+Ship_18PRods_to_Store  Deliver  1
+Ship_MLegs_to_Store  MLegs  1
+Ship_MLegs_to_Store  Deliver  1
+Ship_36MRods_to_Store  36MRods  1
+Ship_36MRods_to_Store  Deliver  1
+Ship_30MRods_to_Store  30MRods  1
+Ship_30MRods_to_Store  Deliver  1
+Ship_Pillow_to_Store  Pillow  1
+Ship_Pillow_to_Store  Deliver  1
+Ship_SmallPFleeceBed_to_DogShow SmallPFleeceBed 1
+Ship_SmallPMeshBed_to_DogShow  SmallPMeshBed  1
+Ship_SFleeceTop_to_DogShow  SFleeceTop  1
+Ship_Pillow_to_DogShow  Pillow  1
+Ship_Bag_to_DogShow  Bag  1
+Ship_SQuiltBed_to_DogShow  SQuiltBed 1
+Ship_SpoiledBundle_to_DogShow SpoiledBundle  1
+Ship_SQuiltTop_to_DogShow  SQuiltTop 1
+Ship_LargePMeshBed_to_Online LargePMeshBed 1
+Ship_LargePMeshBed_to_Online LBox 1
+Ship_LargePFleeceBed_to_Online LargePFleeceBed 1
+Ship_LargePFleeceBed_to_Online LBox 1
+Ship_MediumPFleeceBed_to_Online MediumPFleeceBed 1
+Ship_MediumPFleeceBed_to_Online SBox 1
+Ship_MediumPMeshBed_to_Online MediumPMeshBed 1
+Ship_MediumPMeshBed_to_Online SBox 1
+Ship_SmallPMeshBed_to_Online SmallPMeshBed 1
+Ship_SmallPMeshBed_to_Online SBox 1
+Ship_SmallPFleeceBed_to_Online SmallPFleeceBed 1
+Ship_SmallPFleeceBed_to_Online SBox 1
+Ship_LFleeceTop_to_Online LFleeceTop 1
+Ship_LFleeceTop_to_Online SBox 1
+Ship_MFleeceTop_to_Online MFleeceTop 1
+Ship_MFleeceTop_to_Online SBox 1
+Ship_SFleeceTop_to_Online SFleeceTop 1
+Ship_SFleeceTop_to_Online SBox 1
+Ship_Pillow_to_Online Pillow 1
+Ship_Pillow_to_Online SBox 1
+Ship_LBundle_to_Online LBundle 1
+Ship_LBundle_to_Online LBox 1
+Ship_MBundle_to_Online MBundle 1
+Ship_MBundle_to_Online SBox 1
+Ship_SBundle_to_Online SBundle 1
+Ship_SBundle_to_Online SBox 1
+Buy_18PRods  Money  30
+Buy_18PRods  Pickup  1
+Buy_24PRods  Money  36
+Buy_24PRods  Pickup  1
+Buy_30PRods  Money  42
+Buy_30PRods  Pickup  1
+Buy_30MRods  Money  40
+Buy_30MRods  Pickup  1
+Buy_36PRods  Money  48
+Buy_36PRods  Pickup  1
+Buy_36MRods  Money  50
+Buy_36MRods  Pickup  1
+Buy_PLegs  Money  100
+Buy_PLegs  Pickup  1
+Buy_MLegs  Money  50
+Buy_MLegs  Pickup  1
+Buy_Fleece  Money  400
+Buy_Fleece  Pickup  1
+Buy_Mesh  Money  600
+Buy_Mesh  Pickup  1
+Buy_Casing  Money  100
+Buy_Casing  Pickup  1
+Buy_JaneyTime Money  20
+Buy_JaneyTime Pickup  1
+Buy_Loops  Money  40
+Buy_Loops Pickup  1
+Buy_FabricBundle Money 800
+Buy_FabricBundle Pickup 1
+Buy_MetalBundle Money 200
+Buy_MetalBundle Pickup 1
+Buy_LBox Money 75
+Buy_LBox Pickup 1
+Buy_SBox Money 50
+Buy_SBox Pickup 1
+Buy_SQuiltTop Money 15
+MAKE_LargeMMeshBed, LMeshTop  1
+MAKE_LargeMMeshBed, LMFrame  1
+MAKE_LargeMMeshBed, DougTime  15
+MAKE_LargePMeshBed, LMeshTop  1
+MAKE_LargePMeshBed, LPFrame  1
+MAKE_LargePMeshBed, DougTime  12
+MAKE_LargeMFleeceBed, LFleeceTop  1
+MAKE_LargeMFleeceBed, LMFrame  1
+MAKE_LargeMFleeceBed, DougTime  15
+MAKE_LargePFleeceBed, LFleeceTop  1
+MAKE_LargePFleeceBed, LPFrame  1
+MAKE_LargePFleeceBed, DougTime  12
+MAKE_MediumPFleeceBed, MFleeceTop  1
+MAKE_MediumPFleeceBed, MPFrame  1
+MAKE_MediumPFleeceBed, DougTime  8
+MAKE_MediumPMeshBed, MMeshTop  1
+MAKE_MediumPMeshBed, MPFrame  1
+MAKE_MediumPMeshBed, DougTime  8
+MAKE_SmallPMeshBed, SMeshTop  1
+MAKE_SmallPMeshBed, SPFrame  1
+MAKE_SmallPMeshBed, DougTime  5
+MAKE_SmallPFleeceBed, SFleeceTop  1
+MAKE_SmallPFleeceBed, SPFrame  1
+MAKE_SmallPFleeceBed, DougTime  5
+MAKE_LMeshTop_C_D  Mesh  36
+MAKE_LMeshTop_C_D Casing  132
+MAKE_LMeshTop_C_D DougTime  12
+MAKE_LMeshTop_C_D SergerTime 12
+MAKE_LMeshTop_C_J  Mesh_J  36
+MAKE_LMeshTop_C_J Casing_J  132
+MAKE_LMeshTop_C_J JaneyTime 15
+MAKE_LMeshTop_C_J SewTime 15
+MAKE_LMeshTop_L_D  Mesh  36
+MAKE_LMeshTop_L_D DougTime  12
+MAKE_LMeshTop_L_D Loops  26
+MAKE_LMeshTop_L_D SergerTime 12
+MAKE_LMeshTop_L_J  Mesh_J  36
+MAKE_LMeshTop_L_J Loops_J  26
+MAKE_LMeshTop_L_J JaneyTime 15
+MAKE_LMeshTop_L_J SewTime 15
+MAKE_MMeshTop_C_D Mesh  24
+MAKE_MMeshTop_C_D Casing  108
+MAKE_MMeshTop_C_D DougTime  8
+MAKE_MMeshTop_C_D SergerTime 8
+MAKE_MMeshTop_C_J, Mesh_J  24
+MAKE_MMeshTop_C_J, Casing_J  108
+MAKE_MMeshTop_C_J, JaneyTime 10
+MAKE_MMeshTop_C_J, SewTime 10
+MAKE_MMeshTop_L_D, Mesh  24
+MAKE_MMeshTop_L_D, DougTime  8
+MAKE_MMeshTop_L_D, Loops 22
+MAKE_MMeshTop_L_D, SergerTime  8
+MAKE_MMeshTop_L_J, Mesh_J  24
+MAKE_MMeshTop_L_J, Loops_J 22
+MAKE_MMeshTop_L_J, JaneyTime 10
+MAKE_MMeshTop_L_J, SewTime 10
+MAKE_SMeshTop_C_D, Mesh  18
+MAKE_SMeshTop_C_D, Casing  84
+MAKE_SMeshTop_C_D, DougTime  4
+MAKE_SMeshTop_C_D, SergerTime  4
+MAKE_SMeshTop_C_J, Mesh_J  18
+MAKE_SMeshTop_C_J, Casing_J  84
+MAKE_SMeshTop_C_J, JaneyTime  5
+MAKE_SMeshTop_C_J, SewTime  5
+MAKE_SMeshTop_L_J, Mesh_J  18
+MAKE_SMeshTop_L_J, Loops_J  18
+MAKE_SMeshTop_L_J, JaneyTime  5
+MAKE_SMeshTop_L_J, SewTime  5
+MAKE_SMeshTop_L_D, Mesh  18
+MAKE_SMeshTop_L_D, DougTime  4
+MAKE_SMeshTop_L_D, Loops  18
+MAKE_SMeshTop_L_D, SergerTime  4
+MAKE_LFleeceTop_C_D  Fleece  36
+MAKE_LFleeceTop_C_D Casing  132
+MAKE_LFleeceTop_C_D DougTime  25
+MAKE_LFleeceTop_C_D SergerTime  25
+MAKE_LFleeceTop_C_J  Fleece_J  36
+MAKE_LFleeceTop_C_J Casing_J  132
+MAKE_LFleeceTop_C_J, JaneyTime 20
+MAKE_LFleeceTop_C_J, SewTime 20
+MAKE_MFleeceTop_C_D, Fleece  24
+MAKE_MFleeceTop_C_D, Casing  108
+MAKE_MFleeceTop_C_D, DougTime 20
+MAKE_MFleeceTop_C_D, SergerTime 20
+MAKE_MFleeceTop_C_J, Fleece_J  24
+MAKE_MFleeceTop_C_J, Casing_J  108
+MAKE_MFleeceTop_C_J, JaneyTime 15
+MAKE_MFleeceTop_C_J, SewTime 15
+MAKE_SFleeceTop_C_D, Fleece  18
+MAKE_SFleeceTop_C_D, Casing  84
+MAKE_SFleeceTop_C_D, DougTime  15
+MAKE_SFleeceTop_C_D, SergerTime  15
+MAKE_SFleeceTop_C_J, Fleece_J  18
+MAKE_SFleeceTop_C_J, Casing_J  84
+MAKE_SFleeceTop_C_J, JaneyTime 10
+MAKE_SFleeceTop_C_J, SewTime 10
+MAKE_MPFrame, PLegs  4
+MAKE_MPFrame, 24PRods  2
+MAKE_MPFrame, 30PRods  2
+MAKE_SPFrame, PLegs  4
+MAKE_SPFrame, 24PRods  2
+MAKE_SPFrame, 18PRods  2
+MAKE_LPFrame, PLegs  4
+MAKE_LPFrame, 36PRods  2
+MAKE_LPFrame, 30PRods  2
+MAKE_LMFrame, MLegs  4
+MAKE_LMFrame, 36MRods  2
+MAKE_LMFrame, 30MRods  2
+MAKE_Bag_D MeshScrap 1
+MAKE_Bag_D Loops 1
+MAKE_Bag_D DougTime  3
+MAKE_Bag_D SergerTime  3
+MAKE_Bag_J MeshScrap_J 1
+MAKE_Bag_J Loops_J 1
+MAKE_Bag_J, JaneyTime 3
+MAKE_Bag_J, SewTime 3
+MAKE_Pillow_D FleeceScrap 1
+MAKE_Pillow_D DougTime  3
+MAKE_Pillow_D SergerTime  3
+MAKE_Pillow_J FleeceScrap_J 1
+MAKE_Pillow_J, JaneyTime 3
+MAKE_Pillow_J, SewTime 3
+MAKE_SQuiltBed SQuiltTop 1
+MAKE_SQuiltBed DougTime 1 #assume
+MAKE_SQuiltBed SergerTime 1 #assume
+MAKE_LBundle LargePFleeceBed 1 #assume
+MAKE_LBundle LFleeceTop 1
+MAKE_MBundle MediumPFleeceBed 1 #assume
+MAKE_MBundle MFleeceTop 1
+MAKE_SBundle SmallPFleeceBed 1 #assume
+MAKE_SBundle SFleeceTop 1
+MAKE_SpoiledBundle SmallPFleeceBed 1 #assume
+MAKE_SpoiledBundle SFleeceTop 1
+MAKE_SpoiledBundle Pillow 1
+Transport_D_J Money 30
+Transport_J_D Money 50
+Transport_Fleece_D_J Fleece 1
+Transport_FleeceScrap_D_J FleeceScrap 1
+Transport_Casing_D_J Casing 1
+Transport_Loops_D_J Loops 1
+Transport_Mesh_D_J Mesh 1
+Transport_MeshScrap_D_J MeshScrap 1
+Transport_Fleece_D_J MTransport 1
+Transport_FleeceScrap_D_J MTransport 1
+Transport_Casing_D_J MTransport 1
+Transport_Loops_D_J MTransport 1
+Transport_Mesh_D_J MTransport 1
+Transport_MeshScrap_D_J MTransport 1
+Transport_LFleeceTop_J_D LFleeceTop_J 1
+Transport_MFleeceTop_J_D MFleeceTop_J 1
+Transport_SFleeceTop_J_D SFleeceTop_J 1
+Transport_LMeshTop_J_D LMeshTop_J 1
+Transport_MMeshTop_J_D MMeshTop_J 1
+Transport_SMeshTop_J_D SMeshTop_J 1
+Transport_Pillow_J_D Pillow_J 1
+Transport_Bag_J_D Bag_J 1
+Transport_LFleeceTop_J_D PTransport 1
+Transport_MFleeceTop_J_D PTransport 1
+Transport_SFleeceTop_J_D PTransport 1
+Transport_LMeshTop_J_D PTransport 1
+Transport_MMeshTop_J_D PTransport 1
+Transport_SMeshTop_J_D PTransport 1
+Transport_Pillow_J_D PTransport 1
+Transport_Bag_J_D PTransport 1
+;
+param: BOP: produce :=
+Ship_LargeMMeshBed_to_Store  Money  80
+Ship_LargePMeshBed_to_Store  Money 50
+Ship_MediumPMeshBed_to_Store  Money 30
+Ship_SmallPMeshBed_to_Store  Money 20
+Ship_LargeMFleeceBed_to_Store  Money  100
+Ship_LargePFleeceBed_to_Store  Money  60
+Ship_MediumPFleeceBed_to_Store Money  50
+Ship_SmallPFleeceBed_to_Store  Money  30
+Ship_LFleeceTop_to_Store  Money 30
+Ship_MFleeceTop_to_Store  Money 25
+Ship_SFleeceTop_to_Store  Money 15
+Ship_PLegs_to_Store  Money 3
+Ship_36PRods_to_Store  Money 6
+Ship_30PRods_to_Store  Money 5
+Ship_24PRods_to_Store  Money 4
+Ship_18PRods_to_Store  Money 3
+Ship_MLegs_to_Store  Money 5
+Ship_36MRods_to_Store  Money 12
+Ship_30MRods_to_Store  Money 8
+Ship_Pillow_to_Store  Money 5
+Ship_SmallPFleeceBed_to_DogShow Money  65
+Ship_SmallPMeshBed_to_DogShow  Money  45
+Ship_SFleeceTop_to_DogShow  Money 40
+Ship_Pillow_to_DogShow  Money 15
+Ship_Bag_to_DogShow  Money 10
+Ship_SQuiltBed_to_DogShow  Money 55
+Ship_SpoiledBundle_to_DogShow  Money 125
+Ship_SQuiltTop_to_DogShow  Money 30
+Ship_LargePMeshBed_to_Online  Money 55
+Ship_LargePFleeceBed_to_Online  Money 65
+Ship_MediumPFleeceBed_to_Online Money 55
+Ship_MediumPMeshBed_to_Online Money  35
+Ship_SmallPMeshBed_to_Online  Money 25
+Ship_SmallPFleeceBed_to_Online Money 35
+Ship_LFleeceTop_to_Online  Money 25
+Ship_MFleeceTop_to_Online  Money 20
+Ship_SFleeceTop_to_Online Money 15
+Ship_Pillow_to_Online  Money 6
+Ship_LBundle_to_Online  Money 80
+Ship_MBundle_to_Online Money 55
+Ship_SBundle_to_Online Money 40
+Buy_18PRods  18PRods  25
+Buy_24PRods  24PRods 25
+Buy_30PRods  30PRods 25
+Buy_30MRods  30MRods 5
+Buy_36PRods  36PRods 25
+Buy_36MRods  36MRods 5
+Buy_PLegs  PLegs  60
+Buy_MLegs  MLegs  25
+Buy_Fleece  Fleece  1440
+Buy_Mesh  Mesh  3600
+Buy_Casing  Casing  1800
+Buy_JaneyTime JaneyTime 60
+Buy_Loops  Loops  60
+Buy_FabricBundle Fleece 1800
+Buy_FabricBundle Mesh 1800
+Buy_FabricBundle Casing 10800
+Buy_MetalBundle 36MRods 10
+Buy_MetalBundle 30MRods 10
+Buy_MetalBundle MLegs 20
+Buy_LBox LBox 20
+Buy_SBox SBox 20
+Buy_SQuiltTop SQuiltTop 1
+MAKE_SMeshTop_C_J, SMeshTop_J  1
+MAKE_SMeshTop_C_J, MeshScrap_J  1
+MAKE_SMeshTop_C_D, SMeshTop  1
+MAKE_SMeshTop_C_D, MeshScrap  1
+MAKE_SMeshTop_L_J, SMeshTop_J  1
+MAKE_SMeshTop_L_J, MeshScrap_J  1
+MAKE_SMeshTop_L_D, SMeshTop  1
+MAKE_SMeshTop_L_D, MeshScrap  1
+MAKE_SFleeceTop_C_J, SFleeceTop_J  1
+MAKE_SFleeceTop_C_J, FleeceScrap_J  1
+MAKE_SFleeceTop_C_D, SFleeceTop  1
+MAKE_SFleeceTop_C_D, FleeceScrap  1
+MAKE_MMeshTop_C_J, MMeshTop_J  1
+MAKE_MMeshTop_C_D, MMeshTop  1
+MAKE_MMeshTop_L_J, MMeshTop_J  1
+MAKE_MMeshTop_L_D, MMeshTop  1
+MAKE_LMeshTop_C_J,  LMeshTop_J  1
+MAKE_LMeshTop_C_D,  LMeshTop  1
+MAKE_LMeshTop_L_J,  LMeshTop_J  1
+MAKE_LMeshTop_L_D,  LMeshTop  1
+MAKE_LFleeceTop_C_J, LFleeceTop_J  1
+MAKE_LFleeceTop_C_J, FleeceScrap_J  1
+MAKE_LFleeceTop_C_D, LFleeceTop  1
+MAKE_LFleeceTop_C_D, FleeceScrap  1
+MAKE_MFleeceTop_C_J, MFleeceTop_J  1
+MAKE_MFleeceTop_C_J, FleeceScrap_J  1
+MAKE_MFleeceTop_C_D, MFleeceTop  1
+MAKE_MFleeceTop_C_D, FleeceScrap  1
+MAKE_LargeMMeshBed, LargeMMeshBed  1
+MAKE_LargePMeshBed, LargePMeshBed  1
+MAKE_LargeMFleeceBed, LargeMFleeceBed  1
+MAKE_LargePFleeceBed, LargePFleeceBed  1
+MAKE_MediumPFleeceBed, MediumPFleeceBed  1
+MAKE_MediumPMeshBed, MediumPMeshBed  1
+MAKE_SmallPMeshBed, SmallPMeshBed  1
+MAKE_SmallPFleeceBed, SmallPFleeceBed  1
+MAKE_MPFrame, MPFrame  1
+MAKE_SPFrame, SPFrame  1
+MAKE_LPFrame, LPFrame  1
+MAKE_LMFrame, LMFrame  1
+MAKE_Bag_D Bag 1
+MAKE_Bag_J Bag_J 1
+MAKE_Pillow_D Pillow 1
+MAKE_Pillow_J Pillow_J 1
+MAKE_SQuiltBed SQuiltBed 1
+MAKE_LBundle LBundle 1
+MAKE_MBundle MBundle 1
+MAKE_SBundle SBundle 1
+MAKE_SpoiledBundle SpoiledBundle 1
+Transport_D_J MTransport 10000
+Transport_J_D PTransport 10000
+Transport_Fleece_D_J Fleece_J 1
+Transport_FleeceScrap_D_J FleeceScrap_J 1
+Transport_Casing_D_J Casing_J 1
+Transport_Loops_D_J Loops_J 1
+Transport_Mesh_D_J Mesh_J 1
+Transport_MeshScrap_D_J MeshScrap_J 1
+Transport_LFleeceTop_J_D LFleeceTop 1
+Transport_MFleeceTop_J_D MFleeceTop 1
+Transport_SFleeceTop_J_D SFleeceTop 1
+Transport_LMeshTop_J_D LMeshTop 1
+Transport_MMeshTop_J_D MMeshTop 1
+Transport_SMeshTop_J_D SMeshTop 1
+Transport_Pillow_J_D Pillow 1
+Transport_Bag_J_D Bag 1
+;
+param supply:  Mon Tue Wed Thu Fri Sat:=
+18PRods  10  0 0 0 0 0
+24PRods  12  0 0 0 0 0
+30PRods  7  0 0 0 0 0
+30MRods  6  0 0 0 0 0
+36PRods  8  0 0 0 0 0
+36MRods  12  0 0 0 0 0
+PLegs  60  0 0 0 0 0
+MLegs  32  0 0 0 0 0
+Fleece  2880 0 0 0 0 0
+Mesh  1440 0 0 0 0 0
+Casing  7200 0 0 0 0 0
+JaneyTime  0 0 0 0 0 0
+DougTime  600  600 600 600 600 600
+SewTime 1440 1440 1440 1440 1440 1440
+SergerTime 1440 1440 1440 1440 1440 1440
+Loops  0  0 0 0 0 0
+Deliver  10000 10000 10000 10000 10000 10000
+Pickup  10000 10000 10000 10000 10000 10000
+Money  2000 0 0 0 0 0
+;
+param: offset:=
+Ship_LargeMMeshBed_to_Store  Money  1
+Ship_LargePMeshBed_to_Store  Money 1
+Ship_MediumPMeshBed_to_Store  Money 1
+Ship_SmallPMeshBed_to_Store  Money 1
+Ship_LargeMFleeceBed_to_Store  Money  1
+Ship_LargePFleeceBed_to_Store  Money  1
+Ship_MediumPFleeceBed_to_Store Money  1
+Ship_SmallPFleeceBed_to_Store  Money  1
+Ship_LFleeceTop_to_Store  Money 1
+Ship_MFleeceTop_to_Store  Money 1
+Ship_SFleeceTop_to_Store  Money 1
+Ship_PLegs_to_Store  Money 1
+Ship_36PRods_to_Store  Money 1
+Ship_30PRods_to_Store  Money 1
+Ship_24PRods_to_Store  Money 1
+Ship_18PRods_to_Store  Money 1
+Ship_MLegs_to_Store  Money 1
+Ship_36MRods_to_Store  Money 1
+Ship_30MRods_to_Store  Money 1
+Ship_Pillow_to_Store  Money 1
+Ship_SmallPFleeceBed_to_DogShow Money  1
+Ship_SmallPMeshBed_to_DogShow  Money  1
+Ship_SFleeceTop_to_DogShow  Money 1
+Ship_Pillow_to_DogShow  Money 1
+Ship_Bag_to_DogShow  Money 1
+Buy_SQuiltTop SQuiltTop 2
+Transport_LFleeceTop_J_D LFleeceTop 1
+Transport_MFleeceTop_J_D MFleeceTop 1
+Transport_SFleeceTop_J_D SFleeceTop 1
+Transport_Bag_J_D Bag 1
+Transport_LMeshTop_J_D LMeshTop 1
+Transport_MMeshTop_J_D MMeshTop 1
+Transport_SMeshTop_J_D SMeshTop 1
+Transport_Pillow_J_D Pillow 1
+;
+param min_ops:=
+Buy_30MRods  2
+Buy_36MRods  2
+Buy_Loops  2
+Buy_JaneyTime 4
+Buy_SQuiltTop 3;
+param max_ops:
+Mon Tue Wed Thu Fri Sat:=
+Buy_JaneyTime 8 8 4 8 8 8;
+param demand:
+Mon Tue Wed Thu Fri Sat:=
+LargeMFleeceBed_to_Store  4  4 4 4 4 2
+LargePFleeceBed_to_Store  5  5 5 5 5 2
+LargePMeshBed_to_Store  6  6 6 6 6 2
+LargeMMeshBed_to_Store  1  2 3 4 5 2
+MediumPFleeceBed_to_Store 6  7 8 9 10 2
+MediumPMeshBed_to_Store  6  7 8 9 10 2
+SmallPFleeceBed_to_Store  6  7 8 9 10 2
+SmallPMeshBed_to_Store  5  6 7 8 9 2
+LFleeceTop_to_Store  10  0 0 0 10 2
+MFleeceTop_to_Store  5  0 0 0 5 2
+SFleeceTop_to_Store  8  0 0 0 8 2
+18PRods_to_Store  2  0 0 0 0 0
+24PRods_to_Store  4  0 0 0 0 0
+30PRods_to_Store  6  0 0 0 0 0
+30MRods_to_Store  8  0 0 0 0 0
+36PRods_to_Store  10  0 0 0 0 0
+36MRods_to_Store  5  0 0 0 0 0
+PLegs_to_Store  5  0 0 0 0 0
+MLegs_to_Store  10  0 0 0 0 0
+Pillow_to_Store  12  14 15 15 15 5
+SmallPFleeceBed_to_DogShow  0 0 0 0 10 0
+SmallPMeshBed_to_DogShow  0 0 0 0 10 0
+SFleeceTop_to_DogShow  0 0 0 0  5 0
+Pillow_to_DogShow  0 0 0 0 20 0
+SQuiltBed_to_DogShow  0 0 0 0 10 0
+SpoiledBundle_to_DogShow 0 0 0 0 5 0
+SQuiltTop_to_DogShow 0 0 0 0 5 0
+LargePFleeceBed_to_Online 1 2 3 1 1 0
+LargePMeshBed_to_Online  2 2 2 2 3 0
+MediumPFleeceBed_to_Online 3 2 3 1 2 0
+MediumPMeshBed_to_Online 1 2 4 1 3 0
+SmallPFleeceBed_to_Online  2 2 3 2 2 0
+SmallPMeshBed_to_Online  3 2 2 3 3 0
+LFleeceTop_to_Online  1 2 3 4 5 0
+MFleeceTop_to_Online 2 3 5 6 6 0
+SFleeceTop_to_Online 3 2 4 7 7 0
+Pillow_to_Online 1 3 2 2 3 0
+LBundle_to_Online 5 0 0 0 5 0
+MBundle_to_Online 5 0 0 0 5 0
+SBundle_to_Online 2 0 0 0 2 0
+;
+
+
+
+
+
+
+
+

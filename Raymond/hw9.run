@@ -1,0 +1,7 @@
+option solver gurobi;
+option gurobi_options 'MIPGap=.02 ' ' MIPGapABs=90';
+
+model HW8_QTZ.mod;
+data hw9.dat;
+solve;
+display Profit,Z;

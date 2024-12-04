@@ -1,0 +1,70 @@
+# TINY test problem for HW9 - Update
+data;
+
+set MATERIAL:= P1, P1_J, Money, R1, R1_J;         # set of materials
+
+
+set SHIP_Late_OPS := Ship_P1_to_Store;
+set SHIP_Nolate_OPS := Ship_P1_to_Dogshow;
+set OTHER_OPS :=  Buy_R1 Buy_C1 MAKE_P1 Transport_R1_D_J Transport_P1_J_D;
+
+set CAPACITY := C1;                  # set of capacities
+set TIME := day1 day2;               # time periods
+set DEMAND := P1_to_Store P1_to_Dogshow;
+
+
+
+param: BOR :usage :=
+Ship_P1_to_Store P1 1
+Ship_P1_to_Dogshow P1 1
+Buy_R1  Money   10
+Buy_C1  Money   1
+MAKE_P1   R1_J  1
+MAKE_P1   C1  1
+
+Transport_R1_D_J Money 0.1
+Transport_R1_D_J R1 1
+
+Transport_P1_J_D Money 0.1
+Transport_P1_J_D P1_J 1
+;
+
+
+param: BOP: produce :=
+Ship_P1_to_Store Money 2
+Ship_P1_to_Dogshow Money 3
+Buy_R1   R1   7
+Buy_C1  C1 10
+MAKE_P1  P1_J 1
+
+Transport_R1_D_J R1_J 1
+Transport_P1_J_D P1 1
+;
+
+
+
+param demand :=
+P1_to_Store day1  40
+P1_to_Store day2  40
+P1_to_Dogshow day1  25
+P1_to_Dogshow day2  25
+
+;
+
+param supply: day1 day2 :=
+R1 20 20 
+C1 20 20 
+Money 10 0 
+;
+
+param max_ops : day1 day2 :=
+			
+Buy_R1 3 3 
+;
+
+param min_ops :=
+
+;
+param: offset:=
+Transport_P1_J_D P1 1
+;
