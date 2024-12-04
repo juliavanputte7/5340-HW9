@@ -1,0 +1,17 @@
+option gurobi_options 'MIPGap=.02 ' ' MIPGapABs=50';
+reset;
+model DataLoad.mod;
+data HW9.dat;
+model DataGenerate.mod;
+model HW9.mod;
+solve;
+display {k in MAKE_OP, t in TIME} DoOp[t, k];
+display {k in PROC_OP, t in TIME} DoOp[t, k];
+display {k in SHIP_OP, t in TIME} DoOp[t, k];
+display {k in SCRP_OP, t in TIME} DoOp[t, k];
+display {k in STCK_OP, t in TIME} DoOp[t, k];
+display {k in BDMD_OP, t in TIME} DoOp[t, k];
+display {k in DRIV_OP, t in TIME} DoOp[t, k];
+display {k in MOVE_OP, t in TIME} DoOp[t, k];
+display TotRev;
+display TotalProfit;

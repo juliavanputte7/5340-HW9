@@ -1,0 +1,35 @@
+data;
+set MATERIAL := R1 R2 P;
+set CAPACITY := ;
+set NO_PICKUP := ;
+set PICKUP := ;
+set CUSTOMER := C;
+set NO_LATE := ;
+set NO_DELIVER := ;
+set DELIVER := ;
+set SUB_TRIPLES := ;
+set TIME := T;
+set LOCATION := L1 L2;
+set PRIMARY_LOCATION := L1;
+set NONPRIMARY_BUYS := ;
+set EXTRA_BUYS := ;
+set SMALL_BOX := ;
+
+
+param: BOM: usage :=
+P R1 1
+P R2 1;
+
+param: baseprice :=
+C P 10;
+
+param: demand := 
+C P T 10;
+
+param: supply :=
+R1 T L1 10
+R2 T L2 10;
+
+
+
+

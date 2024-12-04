@@ -1,0 +1,256 @@
+# data for dogbed Multi-level, Multi-period with subs
+# same data as HW7 with additions at the bottom
+
+data;
+set MATERIAL := LargeMMeshBed LargePMeshBed MediumPMeshBed SmallPMeshBed 
+	LargeMFleeceBed LargePFleeceBed MediumPFleeceBed SmallPFleeceBed 
+	LMFrame LPFrame MPFrame SPFrame 
+	LFleeceTop MFleeceTop SFleeceTop LMeshTop MMeshTop SMeshTop # set of products
+	Mesh Fleece PLegs Casing 36PRods 30PRods 24PRods 18PRods 
+	Loops   MLegs 36MRods 30MRods FleeceScrap Pillow MeshScrap Bag SmallBox LargeBox;
+set CAPACITY:=  DougTime JaneyTime ;
+set LOCATION := Garage;
+set PRIMARY_LOCATION := Garage;
+set CUSTOMER:= Store DogShow Online;
+set NO_PICKUP := JaneyTime; # resources that don't require pickup when purchased
+set NO_DELIVER := DogShow; # customers that don't require delivery when shipped to
+set NO_LATE := DogShow; # customers that don't allow late shipment
+
+set PICKUP := DougTime; # resource used for pickup
+set DELIVER := DougTime; # resource used for delivery
+set TIME := 23-Oct	24-Oct	25-Oct	26-Oct	27-Oct		 ;
+
+param init_cash := 2000;
+
+param: BOM: usage :=  #list for BOM  USUAL INPUT FORMAT FROM MRP SYSTEM
+LargeMMeshBed, LMeshTop 	1	
+LargeMMeshBed, LMFrame 		1
+LargeMMeshBed, DougTime 15 		
+	
+LargePMeshBed, LMeshTop 	1	
+LargePMeshBed, LPFrame 		1
+LargePMeshBed, DougTime 		12
+	
+LargeMFleeceBed, LFleeceTop 	1	
+LargeMFleeceBed, LMFrame 		1
+LargeMFleeceBed, DougTime 15 		
+
+LargePFleeceBed, LFleeceTop 	1	
+LargePFleeceBed, LPFrame 		1	
+LargePFleeceBed, DougTime		12
+
+MediumPFleeceBed, MFleeceTop 	1	
+MediumPFleeceBed, MPFrame 		1	
+MediumPFleeceBed, DougTime		8
+
+MediumPMeshBed, MMeshTop 	1	
+MediumPMeshBed, MPFrame 	1	
+MediumPMeshBed, DougTime 	8
+
+SmallPMeshBed, SMeshTop 	1	
+SmallPMeshBed, SPFrame 		1	
+SmallPMeshBed, DougTime 		5
+
+SmallPFleeceBed, SFleeceTop 	1	
+SmallPFleeceBed, SPFrame 		1
+SmallPFleeceBed, DougTime		5	
+
+LMeshTop  Mesh		 36	
+LMeshTop Casing 	132
+#LMeshTop SewTime 	12
+LMeshTop DougTime 	12
+
+MMeshTop, Mesh 			24 
+MMeshTop, Casing 		108
+#MMeshTop, SewTime		8
+MMeshTop, DougTime		8
+
+SMeshTop, Mesh 			18
+SMeshTop, Casing 		84
+#SMeshTop, SewTime 		4
+SMeshTop, DougTime 		4
+SMeshTop, MeshScrap 		-1
+
+LFleeceTop  Fleece 		36	
+LFleeceTop Casing 		132
+#LFleeceTop SergerTime		25
+LFleeceTop DougTime		 25
+
+MFleeceTop, Fleece		24 
+MFleeceTop, Casing 		108
+#MFleeceTop, SergerTime	20
+MFleeceTop, DougTime	20
+
+SFleeceTop, Fleece 		18
+SFleeceTop, Casing 		84
+#SFleeceTop, SergerTime 	15
+SFleeceTop, DougTime 	15
+SFleeceTop, FleeceScrap	-1
+
+MPFrame, PLegs 			4
+MPFrame, 24PRods 		2 
+MPFrame, 30PRods 		2 
+
+SPFrame, PLegs 			4
+SPFrame, 24PRods 		2 
+SPFrame, 18PRods 		2	 
+
+LPFrame, PLegs 		4
+LPFrame, 36PRods 	2 
+LPFrame, 30PRods 	2 
+
+LMFrame, MLegs 		4
+LMFrame, 36MRods 	2 
+LMFrame, 30MRods 	2 
+
+Pillow FleeceScrap 1
+Pillow DougTime  3
+
+Bag MeshScrap 1
+Bag Loops 2
+Bag DougTime  3
+;
+
+param:	cost	 :=								#resource cost defaulted to 0 if not specified
+	Fleece		640
+	Mesh		200
+	Casing 		100
+	MLegs		40
+	PLegs		100			 
+	18PRods		30 
+	24PRods		36 
+	30PRods		42  
+	36PRods		48 
+	30MRods		40 
+	36MRods		50
+	JaneyTime 	20
+	DougTime 	5
+	SmallBox	0
+	LargeBox 	0;			
+	
+param:	ord_qty	 :=								#resource order quantity defaulted to 0 if not specified
+	Fleece		1440
+	Mesh		3600
+	Casing 		1800  								# not in data, assuming $2/yard
+	MLegs		40
+	PLegs		100			 
+	18PRods		25
+	24PRods		25
+	30PRods		25 
+	36PRods		25 
+	30MRods		5
+	36MRods		5
+	JaneyTime  	60
+	DougTime  	60;	
+		
+param min_buy:=  # switched to number of ord_qty
+	30MRods		2
+	36MRods		2
+	JaneyTime	4;
+	
+param max_buy : 23-Oct 24-Oct	25-Oct	26-Oct	27-Oct		:=	
+JaneyTime 		8	8	0	8	8
+DougTime 		10	10	10	10	10;
+
+param	baseprice (tr) : Store	Online	DogShow  :=
+LargeMFleeceBed		100		0		0
+LargePFleeceBed		60		90		0
+LargePMeshBed		50		75		0
+LargeMMeshBed		80		0		0
+MediumPFleeceBed	50		65		0
+MediumPMeshBed		30		45		0
+SmallPFleeceBed		30		40		65
+SmallPMeshBed		20		30		45
+LFleeceTop			30		40		0
+MFleeceTop			25		35		0
+SFleeceTop			15		25		40
+18PRods				3		0		0
+24PRods				4		0		0
+30PRods				5		0		0
+30MRods				8		0		0
+36PRods				6		0		0
+36MRods				12		0		0
+PLegs				3		0		0
+MLegs				5		0		0
+Pillow				10		12		15
+Bag					8		10		10		
+	;
+
+#product demand defaulted to 0 if not given here	
+param	demand:= 
+[Store,*,*]: 	23-Oct	24-Oct	25-Oct	26-Oct	27-Oct	
+					 :=
+LargeMFleeceBed		4	4	4	4	4
+LargePFleeceBed		5	5	5	5	5
+LargePMeshBed		6	6	6	6	6
+LargeMMeshBed		1	2	3	4	5
+MediumPFleeceBed		6	7	8	9	10
+MediumPMeshBed		6	7	8	9	10
+SmallPFleeceBed		6	7	8	9	10
+SmallPMeshBed		5	6	7	8	9
+LFleeceTop		10	0	0	0	10
+MFleeceTop		5	0	0	0	5
+SFleeceTop		8	0	0	0	8
+18PRods		2	0	0	0	0
+24PRods		4	0	0	0	0
+30PRods		6	0	0	0	0
+30MRods		8	0	0	0	0
+36PRods		10	0	0	0	0
+36MRods		5	0	0	0	0
+PLegs		5	0	0	0	0
+MLegs		10	0	0	0	0
+ Pillow		12	14	15	15	15
+
+
+[DogShow,*,*]:
+					23-Oct	24-Oct	25-Oct	26-Oct	27-Oct	 :=		
+SmallPFleeceBed		0	0	0	0	10
+SmallPMeshBed		0	0	0	0	15
+SFleeceTop		0	0	0	0	5
+Pillow		0	0	0	0	20
+Bag		0	0	0	0	30;
+	
+	
+param	supply:=
+[*,*,Garage]: 23-Oct:=	
+18PRods	10	
+24PRods	12	
+30PRods	7	
+30MRods	6	
+36PRods	8	
+36MRods	12	
+PLegs	60	
+MLegs	32	
+Fleece 	2880	
+Mesh 	1440	
+Casing 	7200	
+;
+		
+param: SUB_TRIPLES: sub_usage:=  
+#Define the set SUB_TRIPLES as the list is processed
+LMeshTop, Casing, Loops 26
+MMeshTop, Casing, Loops 22 
+SMeshTop, Casing, Loops  18
+LFleeceTop, DougTime, JaneyTime 20
+MFleeceTop, DougTime, JaneyTime 15
+SFleeceTop DougTime, JaneyTime  10
+LMeshTop, DougTime, JaneyTime 15
+MMeshTop, DougTime, JaneyTime 10
+SMeshTop DougTime, JaneyTime  5
+Pillow DougTime, JaneyTime  3
+Bag DougTime, JaneyTime  3
+;
+
+param pick_up_time := 120; # time to pick up purchased resources
+param deliver_time := 120; # time to deliver shipped products
+param late_delivery_penalty := 2; # penalty for meeting demand late
+set NONPRIMARY_BUYS := ;
+set EXTRA_BUYS := ;
+
+
+
+
+
+ 
+
+
