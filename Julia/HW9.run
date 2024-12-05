@@ -23,7 +23,9 @@ model HW9DATA.mod;
 #HW 9 Tinys
 #data tiny_FabricBundle.dat;
 #data tiny_Boxes.dat;
-data tiny_locations.dat;
+#data tiny_locations.dat;
+
+data SmallTest2_JULIA.dat;
 
 # THE REAL DEAL
 #data HW9.dat;
