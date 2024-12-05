@@ -1,19 +1,19 @@
 data;
 set MATERIAL := R1 R2 P;
-set CAPACITY := ;
-set NO_PICKUP := ;
-set PICKUP := ;
+set CAPACITY_RESOURCES := Doug Janey TransferD2J TransferJ2D;
+#set NO_PICKUP := ;
+#set PICKUP := ;
 set CUSTOMER := C;
 set NO_LATE := ;
-set NO_DELIVER := ;
-set DELIVER := ;
+#set NO_DELIVER := ;
+set DELIVER_PICKUP := Doug;
 set SUB_TRIPLES := ;
 set TIME := T1 T2;
-set LOCATION := L1 L2;
-set PRIMARY_LOCATION := L1;
-set NONPRIMARY_BUYS := ;
-set EXTRA_BUYS := ;
-set SMALL_BOX := ;
+#set LOCATION := L1 L2;
+#set PRIMARY_LOCATION := L1;
+#set NONPRIMARY_BUYS := ;
+#set EXTRA_BUYS := ;
+#set SMALL_BOX := ;
 
 param init_cash := 100;
 
@@ -28,8 +28,7 @@ param: demand :=
 C P T1 10;
 
 param: supply :=
-R1 T1 L1 10
-R2 T1 L2 10;
+R1 T1 10
+R2 T1 10
+Doug T1 1000;
 
-param transport_out_cost := 10;
-param transport_in_cost := 30;

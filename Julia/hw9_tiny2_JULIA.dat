@@ -1,0 +1,90 @@
+data;
+
+
+set MATERIAL := m1 b1 m1J b1J Money SmallBox BigBox;
+
+#set BIG_ITEMS := m1;
+
+set CUSTOMER := c1 c2 c3 c4;
+
+#set BUNDLES := b1;
+
+set CAPACITY_RESOURCES:= Doug Janey TransportJ2D TransportD2J;
+
+set DELIVER_PICKUP := Doug;
+#set QUILTED_PRODUCTS;
+
+#set LOCATIONS := DougHouse JaneyStudio;
+
+set TIME := t1 t2 t3 t4;
+
+#set TRANSPORTABLE := m1 b1 Money SmallBox BigBox;
+
+param: BOM: usage :=
+	b1 m1 2
+	b1 Doug 1000
+	
+	b1J Janey 1000
+	b1J m1J 2
+;
+	
+param: cost :=
+	m1 10
+	Doug 1
+    Janey 1;
+
+param: ord_qty :=
+    m1 1
+    Doug 120
+    Janey 120
+;
+
+#param: bundle_qty :=
+#;
+
+
+#param: bundleCost :=
+#;
+
+param min_buy :=
+    m1 1
+    Doug 1
+    Janey 1;
+
+param max_buy  :=
+    t1 m1 10 
+    t2 m1 10 
+    t3 m1 10 
+    t4 m1 10
+;
+param baseprice (tr) : c1 c2 c3 c4 :=
+    m1   1 1 1 1
+    b1	100 100 100 100
+;
+
+param demand :=
+[c3,*,*]: 
+    t1 t2 t3 t4 :=
+        b1 0 0 0 4
+[c4,*,*]: 
+    t1 t2 t3 t4 :=
+        b1 0 0 0 4;
+        
+param supply :=
+  
+    m1 t1 8
+    m1J t1 4
+    
+    Doug t1  0
+    Doug t2  0
+    
+    Janey t1  8
+    Janey t2  8
+    
+    Money t1  100
+    BigBox t1  10
+    SmallBox t1  10;
+
+#param: SUB_TRIPLES: subusage :=
+#;
+

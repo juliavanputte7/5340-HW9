@@ -371,7 +371,7 @@ subject to revenue: rev = sum{(o,l,'Money') in SHIP_BOP, t in TIME : l=='DougHou
 #data hw8tiny1.dat;
 #data hw9_tinydat.dat;
 #data regression_testing.dat;
-data hw9_v2.dat;
+data hw9_tiny2.dat;
 solve;
 display Do;
 display profit;

@@ -25,7 +25,9 @@ model HW9DATA.mod;
 #data tiny_Boxes.dat;
 #data tiny_locations.dat;
 
-data SmallTest2_JULIA.dat;
+#data SmallTest3_JULIA.dat;
+
+data hw9_tiny2_JULIA.dat;
 
 # THE REAL DEAL
 #data HW9.dat;
