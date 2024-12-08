@@ -1,0 +1,132 @@
+# data for dogbed Multi-level, Multi-period with subs
+data;
+set MATERIAL := 
+	LargePFleeceBed 
+	LPFrame 
+	LFleeceTop # set of products
+	Fleece PLegs Casing 36PRods 30PRods 
+	Loops
+	QBed LargeBox;
+set CAPACITY:=  DougTime JaneyTime ;
+set LOCATION := Garage Studio;
+set PRIMARY_LOCATION := Garage;
+set CUSTOMER:= Store DogShow Online;
+set NO_PICKUP := JaneyTime; # resources that don't require pickup when purchased
+set NO_DELIVER := DogShow; # customers that don't require delivery when shipped to
+set NO_LATE := DogShow; # customers that don't allow late shipment
+
+set PICKUP := DougTime; # resource used for pickup
+set DELIVER := DougTime; # resource used for delivery
+set TIME := 3-Dec	4-Dec		 ;
+
+param init_cash := 2000;
+
+param: BOM: usage :=  #list for BOM  USUAL INPUT FORMAT FROM MRP SYSTEM
+LargePFleeceBed, LFleeceTop 	1	
+LargePFleeceBed, LPFrame 		1	
+LargePFleeceBed, DougTime		12
+
+LFleeceTop  Fleece 		36	
+LFleeceTop Casing 		132
+#LFleeceTop SergerTime		25
+LFleeceTop DougTime		 25
+
+LPFrame, PLegs 		4
+LPFrame, 36PRods 	2 
+LPFrame, 30PRods 	2 
+;
+
+param:	cost	 :=								#resource cost defaulted to 0 if not specified
+	Fleece		400
+	Casing 		100
+	PLegs		100			 
+	30PRods		42  
+	36PRods		48 
+	Loops 		40
+	JaneyTime 	20
+	DougTime 	5;			
+	
+param:	ord_qty	 :=								#resource order quantity defaulted to 0 if not specified
+	Fleece		1440
+	Casing 		1800  								# not in data, assuming $2/yard
+	PLegs		100			 
+	30PRods		25 
+	36PRods		25 
+	Loops		60
+	JaneyTime  	60
+	DougTime  	60;	
+	
+set NONPRIMARY_BUYS := JaneyTime;
+set EXTRA_BUYS := (JaneyTime, Studio);
+		
+param min_buy:=  # switched to number of ord_qty
+	JaneyTime	4;
+	
+param max_buy : 3-Dec 4-Dec	:=	
+JaneyTime 		8	8	
+DougTime 		10	10	;
+
+param	baseprice (tr) : Store	Online	DogShow  :=
+LargePFleeceBed		60		65		0
+18PRods				3		0		0
+24PRods				4		0		0
+30PRods				5		0		0
+36PRods				6		0		0
+PLegs				3		0		0
+	;
+
+#product demand defaulted to 0 if not given here	
+param	demand:= 
+[Store,*,*]: 	3-Dec	4-Dec
+					 :=
+LargePFleeceBed		100	100	
+30PRods		0	0	
+36PRods		0	0	
+PLegs		0	0	
+
+[Online,*,*]: 	3-Dec	4-Dec	
+					 :=
+LargePFleeceBed		100	100	
+
+[DogShow,*,*]:
+					3-Dec	4-Dec :=		
+LargePFleeceBed		0	0
+;	
+	
+set SMALL_BOX := SmallPFleeceBed SmallPMeshBed SFleeceTop Pillow;
+
+param	supply:=
+[*,*,Garage]:	3-Dec:=		
+18PRods		10	
+24PRods		12	
+30PRods		7	
+30MRods		6	
+36PRods		8	
+36MRods		12	
+PLegs		60	
+MLegs		32	
+Fleece 		2880	
+Mesh 	1440	
+Casing 	7200
+Loops 10	
+;
+		
+param: SUB_TRIPLES: sub_usage:=  
+#Define the set SUB_TRIPLES as the list is processed
+LFleeceTop, DougTime, JaneyTime 20
+;
+
+param pick_up_time := 120; # time to pick up purchased resources
+param deliver_time := 120; # time to deliver shipped products
+param late_delivery_penalty := 2; # penalty for meeting demand late
+param transport_out_cost := 30;
+param transport_in_cost := 50;
+
+
+
+
+
+
+ 
+
+

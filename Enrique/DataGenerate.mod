@@ -92,7 +92,7 @@ let {r in MATERIAL, s in LOCATION, d in PRIMARY_LOCATION : s != d} produce["Move
 
 
 param offset {BOP} default 0; # delay between time period of execution of operation and when the production is recieved 
-let offset["Buy_QTop", "QTop_at_Garage"] := 2;
+#let offset["Buy_QTop", "QTop_at_Garage"] := 2;
 let {(c, p) in HAS_DEMAND} offset[c & "_Ship_" & p, "Money"] := 1; # money for a shipment comes at the end of the day
 let {r in MATERIAL, l in LOCATION} offset["Stock_" & r & "_at_" & l, r & "_at_" & l] := 1; 
 let offset["Stock_Money", "Money"] := 1;
