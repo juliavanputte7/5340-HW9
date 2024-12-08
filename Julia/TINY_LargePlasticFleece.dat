@@ -1,0 +1,126 @@
+# data for Operations model: dogbed Multi-level, Multi-period with subs
+data;
+
+set MATERIAL := 
+30PlasticRod
+36PlasticRod
+PlasticLegs
+Fleece
+FleeceJ
+Mesh
+MeshJ
+Loops
+LoopsJ
+Casing
+CasingJ
+LargePlasticFleece
+LargeFleeceTop
+LargeFleeceTopJ
+Money
+LargePlasticFrame
+FabricBundle
+MetalBundle
+LargeBox;
+
+set CUSTOMER := Store Show Online;
+set LOW_PRIORITY :=;
+set HIGH_PRIORITY := Store Show Online;
+set NO_LATE := Show;
+set LARGE_PRODUCTS := LargePlasticMesh LargePlasticFleece 36PlasticRod 36MetalRod 
+						LargePlasticFrame LargeMetalFrame LargeMeshTop LargeFleeceTop;
+
+set CAPACITY_RESOURCES := Doug Janey TransferD2J TransferJ2D;
+set DELIVER_PICKUP := Doug; #set of capacity resources that can be used to deliver and pickup!
+set TIME := 
+    3-Dec 4-Dec;
+
+param: BOM: usage := 
+LargePlasticFleece	LargeFleeceTop 1
+LargePlasticFleece	LargePlasticFrame 1
+LargePlasticFleece	Doug	12
+
+LargeFleeceTop	Fleece	36
+LargeFleeceTop	Casing	132
+LargeFleeceTop	Doug	25
+
+LargeFleeceTopJ	FleeceJ	36
+LargeFleeceTopJ	CasingJ	132
+LargeFleeceTopJ	Janey	20
+
+LargePlasticFrame PlasticLegs	4
+LargePlasticFrame 36PlasticRod	2
+LargePlasticFrame 30PlasticRod	2
+;
+
+param: cost := 
+30PlasticRod	42
+36PlasticRod	48
+PlasticLegs	100
+Fleece	400
+Casing	100
+Loops	40
+Janey   20
+Doug 5
+FabricBundle 830
+MetalBundle 200
+LargeBox 75
+TransferD2J 30
+TransferJ2D 50
+;		
+
+param: ord_qty := 
+30PlasticRod	25
+36PlasticRod	25
+PlasticLegs	60
+Fleece	1440
+Casing	1800
+Loops	60
+Janey 60
+Doug 60
+LargeBox 20
+FabricBundle 1
+MetalBundle 1
+TransferD2J 1
+TransferJ2D 1
+;
+
+param min_buy :=
+    Loops 2
+    Janey 4;
+
+param baseprice (tr): Store Show Online:= 
+    LargePlasticFleece    60 0 65
+    ;
+
+param p_disc := 0.02;
+
+param demand := 
+[Store, *, *]: 3-Dec 4-Dec :=
+LargePlasticFleece  100 100 
+
+[Online, *, *]: 3-Dec 4-Dec :=
+LargePlasticFleece  100 100 ;
+
+param supply: 3-Dec 4-Dec:=
+30PlasticRod    7     0  
+36PlasticRod    8     0   
+PlasticLegs     60    0   
+Fleece          2880  0   
+Casing          7200  0    
+Money           2000  0   
+;
+
+param max_buy:=
+3-Dec Janey 8
+4-Dec Janey 4
+
+3-Dec Doug 10
+4-Dec Doug 10
+
+;
+
+
+param: SUB_TRIPLES: sub_usage penalty mix := 
+;
+
+param: receive_offset:= ;

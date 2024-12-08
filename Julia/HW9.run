@@ -2,7 +2,7 @@ reset;
 
 option solver gurobi;
 option gurobi_options 'MIPGap=.02' ; 
-option gurobi_options 'MIPGapABs=50';
+option gurobi_options 'MIPGapABs=100';
 #option gurobi_options 'MIPGap=.11 ' ' MIPGapABs=200'; # for testing, fast runs
 
 model HW9DATA.mod;
@@ -25,9 +25,11 @@ model HW9DATA.mod;
 #data tiny_Boxes.dat;
 #data tiny_locations.dat;
 
+data TINY_LargePlasticFleece.dat;
+
 #data SmallTest3_JULIA.dat;
 
-data hw9_tiny2_JULIA.dat;
+#data hw9_tiny2_JULIA.dat;
 
 # THE REAL DEAL
 #data HW9.dat;
@@ -64,9 +66,8 @@ set SHIP_BOR := setof {(c, r) in HAS_DEMAND} ("Ship_" & r & "_" & c, r);
 set SHIP_BOR_DELIVER := setof {(c, r) in HAS_DEMAND : c != "Show"} ("Ship_" & r & "_" & c, "Deliver_Time");
 
 # New sets for using boxes to ship to online customers
-set LARGE_PRODUCTS := setof {(p,r) in BOM: r == "36PlasticRod" or r == "36MetalRod"} p ;
-set SHIP_LARGEBOX := setof {(c,r) in HAS_DEMAND: c == "Online" and r in LARGE_PRODUCTS} ("Ship_" & r & "_" & c, "LargeBox");
-set SHIP_SMALLBOX := setof {(c,r) in HAS_DEMAND: c == "Online" and r not in LARGE_PRODUCTS} ("Ship_" & r & "_" & c, "SmallBox");
+set SHIP_LARGEBOX := setof {(c,r) in HAS_DEMAND: ((c == "Online") and (r in LARGE_PRODUCTS))} ("Ship_" & r & "_" & c, "LargeBox");
+set SHIP_SMALLBOX := setof {(c,r) in HAS_DEMAND: ((c == "Online") and (not r in LARGE_PRODUCTS))} ("Ship_" & r & "_" & c, "SmallBox");
 
 # BOR for converting Doug Time to Pickup and Delivery times
 set DELIVER_BOR := setof {t in DELIVER_PICKUP} ("Get_Deliver", t);
@@ -102,6 +103,8 @@ set BUY_FABRICBUNDLE_FLEECE := {("Buy_FabricBundle", "Fleece")};
 set BUY_FABRICBUNDLE_MESH := {("Buy_FabricBundle", "Mesh")};
 set BUY_FABRICBUNDLE_CASING := {("Buy_FabricBundle", "Casing")};
 
+set BUY_METAL_BUNDLE := {("Buy_MetalBundle", "30MetalRod"),("Buy_MetalBundle", "36MetalRod"),("Buy_MetalBundle", "MetalLegs")};
+
 # BOP for transfering stuff from Doug to Janey
 # Will be using the Doug resource and producing the Janey, so BOP should produce the Janey resource.
 set TRANSFER_BOP_D2J := setof{r in RAW : match(r,"J") > 1} ("Transfer_" & r, r);
@@ -113,7 +116,7 @@ set TRANSFER_BOP_J2D := setof{r in PROD : match(r,"J") > 1} ("Transfer_" & r, su
 # Union of all BOP sets
 set BOP := MAKE_BOP union MAKE_BOP_COPROD union BUY_BOP union SHIP_BOP union DELIVER_BOP union PICKUP_BOP 
 union BUY_FABRICBUNDLE_FLEECE union BUY_FABRICBUNDLE_MESH union BUY_FABRICBUNDLE_CASING
-union TRANSFER_BOP_J2D union TRANSFER_BOP_D2J;
+union TRANSFER_BOP_J2D union TRANSFER_BOP_D2J union BUY_METAL_BUNDLE;
 
 # Create O_SUB_TRIPLES for substitution operations
 set O_SUB_TRIPLES within {OPERATIONS, RESOURCE, RESOURCE} := setof {(p, r, j) in SUB_TRIPLES} ("Make_" & p, r, j);
@@ -155,7 +158,6 @@ let {r in RAW : match(r,"J") > 1} usages["Transfer_" & r, "TransferD2J"] := .000
 # Use Janey prod
 let {r in PROD : match(r,"J") > 1} usages["Transfer_" & r, r] := 1;
 # Use $50 Janey -> Doug
-### THIS IS WRONG!!! $50 per every transfer - not right
 let {r in PROD : match(r,"J") > 1} usages["Transfer_" & r, "TransferJ2D"] := .0001;
 
 # Define produce values for resources
@@ -170,10 +172,15 @@ let {(p, r) in BOM} produce["Make_" & p, p] := 1;
 # Assign BUY production: Order quantity for each resource
 let {r in CAN_BUY} produce["Buy_" & r, r] := ord_qty[r];
 
-# Assign Fabric Bundle Production
+# Assign Fabric and Metal Bundle Production
 let produce["Buy_FabricBundle", "Fleece"] := 1800;
 let produce["Buy_FabricBundle", "Mesh"] := 1800;
 let produce["Buy_FabricBundle", "Casing"] := 10800;
+
+#10 each 30, 36 rods, 20 legs
+let produce["Buy_MetalBundle", "30MetalRod"] := 10;
+let produce["Buy_MetalBundle", "36MetalRod"] := 10;
+let produce["Buy_MetalBundle", "MetalLegs"] := 20;
 
 # Assign SHIP production: Monetary value for each product shipped
 let {(c, r) in HAS_DEMAND} produce["Ship_" & r & "_" & c, "Money"] := baseprice[c, r];
@@ -215,3 +222,8 @@ param op_pen {OPERATIONS} default .01; # Added to avoid unnecessary stock costs 
 
 # Load the main model
 model HW9.mod;
+solve;
+
+display Operation;
+display Profit;
+display Revenue;

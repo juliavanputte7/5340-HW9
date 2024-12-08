@@ -58,6 +58,7 @@ LargeBundle
 MediumBundle
 SmallBundle
 FabricBundle
+MetalBundle
 LargeBox
 SmallBox;
 
@@ -70,6 +71,8 @@ set CAPACITY_RESOURCES := Doug Janey TransferD2J TransferJ2D;
 set DELIVER_PICKUP := Doug; #set of capacity resources that can be used to deliver and pickup!
 set TIME := 
     3-Dec 4-Dec 5-Dec 6-Dec 7-Dec 8-Dec;
+set LARGE_PRODUCTS := LargePlasticMesh LargePlasticFleece 36PlasticRod 36MetalRod 
+						LargePlasticFrame LargeMetalFrame LargeMeshTop LargeFleeceTop;
 
 param: BOM: usage := 
 LargePlasticMesh	LargeMeshTop 1
@@ -222,8 +225,10 @@ Mesh	600
 Casing	100
 Loops	40
 Janey   20
+Doug 5
 SmallQuiltTop 15
 FabricBundle 830
+MetalBundle 200
 LargeBox 75
 SmallBox 50
 TransferD2J 30
@@ -244,10 +249,12 @@ Mesh	3600
 Casing	1800
 Loops	60
 Janey 60
+Doug 60
 SmallQuiltTop 1
 LargeBox 20
 SmallBox 20
 FabricBundle 1
+MetalBundle 1
 TransferD2J 1
 TransferJ2D 1
 ;
@@ -256,7 +263,8 @@ param min_buy :=
     30MetalRod 2
     36MetalRod 2
     Loops 2
-    Janey 4;
+    Janey 4
+    SmallQuiltTop 3;
 
 param baseprice (tr): Store Show Online:= 
     LargeMetalFleece      100 0 0
@@ -348,7 +356,6 @@ MetalLegs       32    0    0    0    0    0
 Fleece          2880  0    0    0    0    0
 Mesh            1440  0    0    0    0    0
 Casing          7200  0    0    0    0    0
-Doug            600   600  600  600  600  600
 Money           2000  0    0    0    0    0
 ;
 
@@ -359,6 +366,13 @@ param max_buy:=
 6-Dec  Janey 8
 7-Dec  Janey 8
 8-Dec Janey 8
+
+3-Dec Doug 10
+4-Dec Doug 10
+5-Dec Doug 10
+6-Dec  Doug 10
+7-Dec  Doug 10
+8-Dec Doug 10
 ;
 
 

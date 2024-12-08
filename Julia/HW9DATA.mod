@@ -10,6 +10,7 @@ set CUSTOMER;											# Set of customers to whom the products are delivered
 set NO_LATE within CUSTOMER default {};					# Subset of customers for whom late shipments are not allowed
 set LOW_PRIORITY within CUSTOMER default {};			# Subset of customers with low-priority demand
 set HIGH_PRIORITY within CUSTOMER default {};			# Subset of customers with high-priority demand
+set LARGE_PRODUCTS default {};
 
 set RESOURCE = MATERIAL union CAPACITY;					# Set of all resources, combining materials and capacities
 set BOM within {MATERIAL, RESOURCE};	 				# Set of Bill of Materials (BOM) pairs, linking materials to resources
