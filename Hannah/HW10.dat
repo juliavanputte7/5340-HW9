@@ -1,0 +1,325 @@
+data;
+set MAKE_OPS := Make_LPFBed Make_LPFrame Make_LFTop Make_LFTop_J;
+
+set SHIP_OPS := Ship_Online_LPFBed Ship_Store_LPFBed;
+
+set BUY_OPS :=  Buy_30PRods Buy_36PRods 
+				Buy_PLegs Buy_Fleece Buy_Casing 
+				Buy_Loops Buy_JaneyTime Buy_SmallBox_SplA Buy_LargeBox_SplA 
+				Buy_SmallBox_SplB Buy_LargeBox_SplB Buy_FabricB ;
+
+set OTHER_OPS := 	 Scrap_36PRods Scrap_Loops Scrap_FScrap Scrap_Fleece 
+					Scrap_30PRods   Scrap_PLegs  
+					 Scrap_JaneyTime Scrap_Casing  
+					 Scrap_DougTime Scrap_DougTimeOut Scrap_SewTime 
+					Scrap_SergerTime Scrap_LoopsJ  Scrap_CasingJ 
+					Scrap_FScrapJ Scrap_FleeceJ   
+					Scrap_Dem_Store_LPFBed 
+					Scrap_Dem_Online_LPFBed 
+					 Scrap_Deliv_unit Scrap_Pu_unit 
+					Scrap_MoveMPass Scrap_MovePPass 
+					Stock_LPFrame Stock_LFTop 
+					     
+					Stock_Casing Stock_Fleece Stock_PLegs  Stock_30PRods 
+					 Stock_36PRods    
+					Stock_FScrap  Stock_Loops Stock_LoopsJ  
+					Stock_CasingJ Stock_FScrapJ Stock_FleeceJ   
+					 Stock_LargePFleeceBed  
+					 Stock_LPFBed  
+					
+					  Stock_LFTopJ    
+					 Stock_LargeBox  Stock_Money 
+					Stock_Dem_Store_LPFBed 
+					Stock_Dem_Online_LPFBed 
+					  Deliver 
+					Pickup MoveMaterial MoveProduct Move_Loops  Move_Casing Move_FScrap 
+					Move_Fleece      
+					 Move_LFTopJ  Move_FScrapJ  
+					;
+set MATERIAL := LPFrame LFTop  Casing Fleece 
+				PLegs  30PRods  36PRods  FScrap  Loops LoopsJ 
+				CasingJ FScrapJ FleeceJ  LPFBed 
+				LFTopJ 
+				LargeBox  Money  
+				Dem_Store_LPFBed 
+				Dem_Online_LPFBed 
+				;
+
+set CAPACITY := JaneyTime DougTime DougTimeOut SewTime SergerTime  Deliv_unit Pu_unit MoveMPass MovePPass;
+set TIME := 3-Dec	4-Dec;
+param: BOR: usage :=
+Make_LPFBed	LFTop	1
+Make_LPFBed	DougTime	12
+Make_LPFBed	LPFrame	1
+
+Make_LPFrame	PLegs	4
+Make_LPFrame	36PRods	2
+Make_LPFrame	30PRods	2
+
+Make_LFTop_J	CasingJ	132
+Make_LFTop_J	FleeceJ	24
+Make_LFTop_J	JaneyTime	15
+Make_LFTop_J	SewTime	15
+
+Make_LFTop	Fleece	36
+Make_LFTop	Casing	132
+Make_LFTop	DougTime	25
+Make_LFTop	SergerTime	25
+
+Ship_Store_LPFBed	LPFBed	1
+
+Ship_Store_LPFBed	Dem_Store_LPFBed	1
+
+Ship_Store_LPFBed	Deliv_unit	1
+
+		
+Ship_Online_LPFBed	LPFBed	1
+
+Ship_Online_LPFBed	LargeBox	1
+
+Ship_Online_LPFBed	Dem_Online_LPFBed	1
+		
+		
+Scrap_36PRods	36PRods	1
+Scrap_Loops	Loops	1
+Scrap_FScrap	FScrap	1
+Scrap_Fleece	Fleece	1
+Scrap_30PRods	30PRods	1
+Scrap_PLegs	PLegs	1
+
+Scrap_JaneyTime	JaneyTime	1
+Scrap_Casing	Casing	1
+
+Scrap_DougTime	DougTime	1
+Scrap_DougTimeOut	DougTimeOut	1
+Scrap_SewTime	SewTime	1
+Scrap_SergerTime	SergerTime	1
+Scrap_LoopsJ	LoopsJ	1
+
+Scrap_CasingJ	CasingJ	1
+Scrap_FScrapJ	FScrapJ	1
+Scrap_FleeceJ	FleeceJ	1
+#Scrap_MScrapJ	MScrapJ	1
+Scrap_MoveMPass	MoveMPass	1
+Scrap_MovePPass	MovePPass	1
+		
+Scrap_Dem_Store_LPFBed	Dem_Store_LPFBed	1
+Scrap_Dem_Online_LPFBed	Dem_Online_LPFBed	1
+
+Scrap_Deliv_unit	Deliv_unit	1
+Scrap_Pu_unit	Pu_unit	1
+		
+Stock_LPFrame	LPFrame	1
+Stock_LFTop	LFTop	1
+
+Stock_Casing	Casing	1
+Stock_Fleece	Fleece	1
+Stock_PLegs	PLegs	1
+
+Stock_30PRods	30PRods	1
+
+Stock_36PRods	36PRods	1
+Stock_FScrap	FScrap	1
+
+Stock_Loops	Loops	1
+Stock_LoopsJ	LoopsJ	1
+
+Stock_CasingJ	CasingJ	1
+Stock_FScrapJ	FScrapJ	1
+Stock_FleeceJ	FleeceJ	1
+
+Stock_LPFBed	LPFBed	1
+Stock_LFTopJ	LFTopJ	1
+
+Stock_LargeBox	LargeBox	1
+Stock_Money	Money	1
+		
+Stock_Dem_Store_LPFBed	Dem_Store_LPFBed	1
+Stock_Dem_Online_LPFBed	Dem_Online_LPFBed	1
+		
+Deliver	DougTimeOut	120
+Pickup	DougTimeOut	120
+		
+MoveMaterial	Money	30
+MoveProduct	Money	50
+		
+Move_Loops	Loops	1
+Move_Casing	Casing	1
+Move_FScrap	FScrap	1
+Move_Fleece	Fleece	1
+Move_Loops	MoveMPass	1
+Move_Casing	MoveMPass	1
+Move_FScrap	MoveMPass	1
+Move_Fleece	MoveMPass	1
+		
+Move_LFTopJ	LFTopJ	1
+
+Move_FScrapJ	FScrapJ	1
+
+
+Move_LFTopJ	MovePPass	1
+Move_FScrapJ	MovePPass	1
+	
+;
+param: BOP: produce :=
+Make_LPFBed	LPFBed	1
+Make_LPFrame	LPFrame	1
+
+Make_LFTop	    LFTop	1
+Make_LFTop_J	LFTopJ	1
+
+
+Ship_Store_LPFBed	Money	60
+
+		
+
+		
+Ship_Online_LPFBed	Money	65
+
+		
+Buy_30PRods	30PRods	25
+
+Buy_36PRods	36PRods	25
+
+Buy_PLegs	PLegs	60
+
+Buy_Fleece	Fleece	1440
+
+Buy_Casing	Casing	1800
+Buy_Loops	Loops	60
+Buy_JaneyTime	JaneyTime	60
+Buy_LargeBox_SplA	LargeBox	20
+Buy_LargeBox_SplB	LargeBox	20
+
+		
+
+Stock_LPFrame	LPFrame	1
+Stock_LFTop	LFTop	1
+
+Stock_Casing	Casing	1
+Stock_Fleece	Fleece	1
+Stock_PLegs	PLegs	1
+
+Stock_30PRods	30PRods	1
+
+Stock_36PRods	36PRods	1
+
+Stock_FScrap	FScrap	1
+
+Stock_Loops	Loops	1
+Stock_LoopsJ	LoopsJ	1
+
+Stock_CasingJ	CasingJ	1
+Stock_FScrapJ	FScrapJ	1
+Stock_FleeceJ	FleeceJ	1
+
+Stock_LPFBed	LPFBed	1
+
+
+Stock_LFTopJ	LFTopJ	1
+
+Stock_LargeBox	LargeBox	1
+
+Stock_Money	Money	1
+		
+Stock_Dem_Store_LPFBed	Dem_Store_LPFBed	1
+Stock_Dem_Online_LPFBed	Dem_Online_LPFBed	1
+		
+Deliver	Deliv_unit	5000
+Pickup	Pu_unit	5000
+		
+MoveMaterial	MoveMPass	10000
+MoveProduct	MovePPass	10000
+		
+Move_Loops	LoopsJ	1
+
+Move_Casing	CasingJ	1
+Move_FScrap	FScrapJ	1
+Move_Fleece	FleeceJ	1
+		
+
+
+Move_LFTopJ	LFTop	1
+
+Move_FScrapJ	FScrap	1
+
+;
+
+param: offset :=
+
+Ship_Store_LPFBed	Money	1	
+Ship_Online_LPFBed	Money	1
+Stock_LPFrame	LPFrame	1
+Stock_LFTop	LFTop	1
+
+Stock_Casing	Casing	1
+Stock_Fleece	Fleece	1
+Stock_PLegs	PLegs	1
+
+Stock_30PRods	30PRods	1
+
+Stock_36PRods	36PRods	1
+
+Stock_FScrap	FScrap	1
+
+Stock_Loops	Loops	1
+Stock_LoopsJ	LoopsJ	1
+
+Stock_CasingJ	CasingJ	1
+Stock_FScrapJ	FScrapJ	1
+Stock_FleeceJ	FleeceJ	1
+
+Stock_LPFBed	LPFBed	1
+
+Stock_LFTopJ	LFTopJ	1
+
+Stock_LargeBox	LargeBox	1
+
+Stock_Money	Money	1
+		
+
+Stock_Dem_Store_LPFBed	Dem_Store_LPFBed	1
+
+Stock_Dem_Online_LPFBed	Dem_Online_LPFBed	1
+
+
+
+Move_LFTopJ	LFTop	1
+
+Move_FScrapJ	FScrap	1
+
+;
+
+param p_disc:= .02;
+
+param supply : 3-Dec	4-Dec	 :=	
+30PRods	7	0	
+	
+36PRods	8	0	
+	
+PLegs	60	0	
+
+Fleece	2880	0		
+Loops	10	0	
+Casing	7200	0	
+SewTime	1440	1440	
+SergerTime	1440	1440	
+DougTime	480	480	
+						
+DougTimeOut	120	120	
+Money	2000	0	
+
+Dem_Store_LPFBed	100	100	
+Dem_Online_LPFBed	100	100	
+
+;
+
+param min_buy:=
+Buy_Loops       2
+Buy_JaneyTime   4;
+
+param max_op :=
+Buy_JaneyTime	3-Dec	8
+Buy_JaneyTime	4-Dec	4
+;
+

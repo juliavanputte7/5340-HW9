@@ -1,7 +1,11 @@
 option gurobi_options 'MIPGap=.0001 ' ' MIPGapABs=.999';
 reset;
 model DataLoad.mod;
+<<<<<<< HEAD
 data HW9Tiny.dat;
+=======
+data SmallTest3.dat;
+>>>>>>> 3e4c5894ffbd72a4c925ea91b265993b840ba7e1
 model DataGenerate.mod;
 model HW9.mod;
 solve;

@@ -13,6 +13,7 @@ var Selfsub{TIME, O_SUB_PAIRS} >= 0; 				# Variables for self-substitutions (use
 
 var Revenue >=0; # For reporting, total revenue 
 var Profit >= 0; # For reporting, total profit
+var Cost >= 0; # For reporting, total cost
 
 ### Objective Function
 
@@ -30,9 +31,9 @@ maximize profit: sum {t in TIME}
             else 0)
         )
         # Scrap penalty (for wasted materials/resources)
-        - sum {r in RESOURCE diff PROD diff CAPACITY} (scrap_pen[r] * Scrap[r, t])
+        #- sum {r in RESOURCE diff PROD diff CAPACITY} (scrap_pen[r] * Scrap[r, t])
         # Stock penalty (carrying cost for storing materials)
-        - sum {r in PROD} (stock_pen[r] * Stock[r, t])
+        #- sum {r in PROD} (stock_pen[r] * Stock[r, t])
         # Penalty for using substitutes
         - sum {(o, i, r) in O_SUB_TRIPLES} (O_penalty[o, i, r] * Sub[t, o, i, r])
         # Penalty for operations to discourage unnecessary actions
@@ -112,6 +113,6 @@ subject to Compute_Revenue:
 	Revenue = sum{t in TIME,(c,p) in HAS_DEMAND} baseprice[c, p] * Operation["Ship_" & p & "_" & c,t];
 	
 subject to Compute_Profit:
-	Profit = sum{t in TIME,(c,p) in HAS_DEMAND} 
-	baseprice[c, p] * Operation["Ship_" & p & "_" & c,t] 
-	- sum{r in CAN_BUY,t in TIME} cost[r] * Operation["Buy_" & r,t] ;
+	Profit = Revenue - Cost;
+	
+subject to Compute_Cost: Cost = sum{r in CAN_BUY, t in TIME} cost[r] * Operation["Buy_"&r,t];
